@@ -1,5 +1,5 @@
-# Follow-up icon removal
+# Follow-up snackbar feedback
 
-- [x] Inspect the SVG target and identify the exact visual icon to remove.
-- [x] Remove the decorative Archive icon from the Vault navigation item without affecting navigation.
+- [x] Inspect current CopyButton, toast provider, and removeAccount flow.
+- [x] Add consistent corner snackbar feedback after password copy and account deletion.
 - [x] Run TypeScript/build and visual verification, then save a new checkpoint.
