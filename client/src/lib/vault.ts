@@ -4,7 +4,7 @@ import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 import * as OTPAuth from "otpauth";
 
-export type VaultAccount = { id: string; service: string; email: string; password: string; twoFA?: string; tags: string[]; updatedAt: number; favorite?: boolean };
+export type VaultAccount = { id: string; service: string; email: string; password: string; twoFA?: string; tags: string[]; createdAt?: number; updatedAt: number; favorite?: boolean };
 export type EncryptedRecord = { version: 1; iv: string; salt: string; ciphertext: string; updatedAt: number };
 const encoder = new TextEncoder(); const decoder = new TextDecoder();
 const bytesToB64 = (bytes: Uint8Array) => btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(""));
