@@ -1,5 +1,5 @@
-# Follow-up tag colors and compact settings
+# Follow-up icon removal
 
-- [x] Inspect SettingsView, tag rendering, and the current tag data model.
-- [x] Add per-tag color preferences with modern visual icons and remove the marked Settings intro block.
-- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+- [x] Inspect all SVG icon contexts in Home.tsx and identify the marked visual element.
+- [x] Remove the marked icon manually without removing adjacent button functionality.
+- [x] Run TypeScript/build and visual verification, then save a new checkpoint.
