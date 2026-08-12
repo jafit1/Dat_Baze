@@ -1,7 +1,5 @@
-# Follow-up modal and tooltip accessibility
+# Follow-up icon removal
 
-- [x] Inspect current AccountModal, popup patterns, header icons, and sidebar navigation.
-- [x] Add a compact confirmation dialog before deleting an account or opening Google login.
-- [x] Add reusable focus trap behavior to every popup/modal surface.
-- [x] Apply the shared tooltip treatment to header and sidebar icons.
-- [x] Run keyboard, responsive, TypeScript/build verification and save a new checkpoint.
+- [x] Inspect the SVG target and identify the exact visual icon to remove.
+- [x] Remove the decorative Archive icon from the Vault navigation item without affecting navigation.
+- [x] Run TypeScript/build and visual verification, then save a new checkpoint.
