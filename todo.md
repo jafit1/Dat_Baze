@@ -1,7 +1,8 @@
-# Follow-up vault interaction features
+# Follow-up vault interaction fixes
 
-- [x] Inspect current sidebar state, account filtering, and account list rendering.
-- [x] Add desktop outside-click auto-close behavior for the drawer.
-- [x] Add card/list view toggle with responsive styling.
-- [x] Add sorting by service name, date added, and last modified.
-- [x] Run TypeScript/build verification and save a new checkpoint.
+- [x] Inspect current drawer close logic, account row actions, TOTP layout, and toolbar controls.
+- [x] Make drawer close completely and reliably on toggle, outside click, and navigation.
+- [x] Compact the TOTP display and align it with edit actions.
+- [x] Add copy-email and Google login actions with a safe login_hint URL.
+- [x] Merge card/list toggle into the top toolbar controls.
+- [x] Run TypeScript/build and interaction verification, then save a new checkpoint.
