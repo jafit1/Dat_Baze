@@ -204,3 +204,13 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .auth-aside::after { border-color: rgba(31,172,255,.22); }
 @media (max-width: 899px) { .auth-card::before { top: 28px; } .auth-card h1 { max-width: 13ch; } }
 @media (prefers-reduced-motion: reduce) { .brand-mark { transition: none !important; } .brand-lockup:hover .brand-mark { transform: none; } }
+
+/* Minimalist Secure Workspace — four-up account cards use compact spacing without sacrificing readable data hierarchy. */
+@media (min-width: 1280px) {
+  .account-list:not(.account-list-list) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .account-list:not(.account-list-list) .account-row { min-height: 136px; padding: 12px 13px 10px; }
+  .account-list:not(.account-list-list) .account-data { min-width: 0; }
+  .account-list:not(.account-list-list) .account-data h4,
+  .account-list:not(.account-list-list) .account-data p { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .account-list:not(.account-list-list) .totp-card { width: min(100%, 160px); }
+}

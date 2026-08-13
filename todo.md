@@ -74,13 +74,20 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 
 # Follow-up GitHub push and Vercel deployment
 
-- [ ] Audit Git remote, repository state, GitHub authentication, Vercel CLI/project access, and deployment environment requirements.
-- [ ] Create a deployment commit and push the project to `https://github.com/jafit1/Dat_Baze`.
-- [ ] Deploy the pushed project to Vercel with the configured static build and required Firebase environment variables.
-- [ ] Verify the GitHub branch, Vercel deployment URL, SPA routing, and build status; document any blocked secrets or login steps.
+- [x] Audit Git remote, repository state, GitHub authentication, Vercel CLI/project access, and deployment environment requirements.
+- [x] Create a deployment commit and push the project to `https://github.com/jafit1/Dat_Baze`.
+- [x] Deploy the pushed project to Vercel with the configured static build and required Firebase environment variables.
+- [x] Verify the GitHub branch, Vercel deployment URL, SPA routing, and build status; document any blocked secrets or login steps.
 
 # Follow-up remove local preview option
 
 - [x] Inspect the auth screen for the local preview button and related handler.
 - [x] Remove the “Lihat preview lokal” option without affecting authentication actions.
 - [x] Run TypeScript/build and verify the updated app in preview.
+
+# Follow-up four-column account grid and auth validation
+
+- [x] Inspect account grid/card sizing and AuthScreen submit validation.
+- [x] Render four account cards per row on wide screens with responsive breakpoints.
+- [x] Require a valid email and non-empty password before login or registration.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
