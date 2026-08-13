@@ -88,3 +88,7 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 @media (prefers-reduced-motion: reduce) {
   html, body, .app-shell, .auth-shell, .lock-shell, .app-sidebar, .topbar, .vault-summary, .search-wrap, .sort-control, .view-toggle, .account-row, .empty-state, .security-card, .setting-card, .modal-card, .lock-card, .auth-card, .auth-aside, .status-capsule, .totp-card, .select-control { transition: none !important; }
 }
+
+/* One shared menu trigger keeps the drawer reachable on both mobile and desktop. */
+.topbar > button:first-of-type { display: grid !important; }
+.topbar > button:nth-of-type(2) { display: none !important; }

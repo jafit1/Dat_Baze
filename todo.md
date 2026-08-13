@@ -23,3 +23,9 @@
 - [x] Add a top-right light/dark toggle with accessible labels and persisted state.
 - [x] Add smooth theme transitions across the interface with reduced-motion support.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up duplicate hamburger control
+
+- [x] Inspect the two hamburger controls and preserve one responsive menu trigger.
+- [x] Remove the duplicate hamburger icon without losing mobile or desktop navigation access.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
