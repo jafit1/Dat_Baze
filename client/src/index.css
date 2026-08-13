@@ -95,6 +95,14 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .topbar > button:first-of-type svg { transform: rotate(0deg); transition: transform 220ms cubic-bezier(.23,1,.32,1); will-change: transform; }
 .app-shell:has(.app-sidebar.sidebar-open) .topbar > button:first-of-type svg { transform: rotate(90deg); }
 
+/* Keep long account forms scrollable while removing the distracting scrollbar rail. */
+.modal-card { scrollbar-width: none; -ms-overflow-style: none; }
+.modal-card::-webkit-scrollbar { width: 0; height: 0; }
+
+/* The required service field stays available; only its visible label is omitted per the visual note. */
+.modal-card .mt-7.grid > label:first-child { font-size: 0; }
+.modal-card .mt-7.grid > label:first-child input { margin-top: 0; font-size: 14px; }
+
 @media (prefers-reduced-motion: reduce) {
   .topbar > button:first-of-type svg,
   .app-shell:has(.app-sidebar.sidebar-open) .topbar > button:first-of-type svg { transition: none !important; transform: none !important; }

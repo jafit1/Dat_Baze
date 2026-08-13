@@ -35,3 +35,9 @@
 - [x] Inspect hamburger markup and drawer open/close state.
 - [x] Add a smooth open/close animation to the hamburger icon with reduced-motion support.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up scrollbar and service label cleanup
+
+- [x] Inspect the marked container overflow and Service name label context.
+- [x] Hide the unnecessary right scrollbar without clipping necessary content, and remove the marked Service name label.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
