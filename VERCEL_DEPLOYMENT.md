@@ -17,6 +17,12 @@ VITE_FIREBASE_APP_ID
 
 These are browser configuration values, not a replacement for security controls. Keep Firebase Authentication enabled and deploy Firestore Security Rules that restrict reads and writes to the authenticated user's own document path.
 
+## Allowed account and first-password policy
+
+The client access policy allows only `maxluno47@gmail.com`. Do not place the initial password in this repository, Vercel environment variables, or frontend code because all `VITE_*` values are visible in the browser. Create or reset the Firebase Authentication user manually in Firebase Console with the initial password agreed by the administrator, then sign in once. Vaultmark creates `users/{uid}/profile/settings` with `mustChangePassword: true` and blocks vault access until the user chooses a new password of at least eight characters. After the change succeeds, the profile flag is set to `false`.
+
+For a production-grade policy, disable public email/password registration in Firebase Authentication and keep the allowlist in sync with the Firebase user records. The frontend allowlist is a UX and access gate; Firebase Authentication and Firestore Rules remain the authoritative security controls.
+
 After the first Vercel deployment, add the Vercel production and preview domains to Firebase Authentication's authorized domains. If a custom domain is added later, add that domain as well.
 
 ## Deployment settings

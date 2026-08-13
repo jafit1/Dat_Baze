@@ -91,3 +91,11 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [x] Render four account cards per row on wide screens with responsive breakpoints.
 - [x] Require a valid email and non-empty password before login or registration.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up profile menu and credential policy
+
+- [x] Inspect topbar profile area, Firebase auth handlers, profile metadata, and Firestore rules.
+- [x] Add a right-top profile menu with Settings access and Logout.
+- [x] Restrict authentication to the configured allowed account without embedding a password in frontend code.
+- [x] Require the allowed account to change its initial password through Firebase and persisted profile metadata.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
