@@ -64,7 +64,7 @@ Use the generated shield-key symbol as the mark. Pair it with the custom wordmar
 
 ## Implementation Notes
 
-- Generated assets are referenced from the project-lifecycle URLs: `/manus-storage/vaultmark-logo_236b87a4.png`, `/manus-storage/vault-pattern_0023c108.png`, `/manus-storage/vault-empty-state_a0c000d6.png`, and `/manus-storage/vault-export-state_1a88040a.png`.
+- Generated visual fallbacks used by the auth and empty states are bundled under `client/public/assets/` as `vaultmark-logo.svg`, `vault-pattern.svg`, and `vault-empty-state.svg`, so the Vercel build does not require the Manus storage proxy.
 - Firebase configuration is read from `VITE_FIREBASE_*` environment variables. Firebase Web API keys are identifiers, not encryption keys; the Master Password is never persisted or transmitted.
 - Firestore document fields contain encrypted payloads only. Security Rules must enforce `request.auth.uid == userId`.
 - The prototype UI includes a clear configuration state when Firebase variables are not yet provided, rather than pretending to be connected.

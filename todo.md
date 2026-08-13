@@ -55,3 +55,9 @@
 - [x] Add account-count badges to each filter option.
 - [x] Add a brief reduced-motion-friendly skeleton/loading state when sorting changes.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up GitHub and Vercel deployment preparation
+
+- [x] Audit Manus runtime dependencies, Vite output, and Manus-specific asset references.
+- [x] Add Vercel configuration and isolate or remove Manus-only runtime integrations where safe.
+- [x] Run TypeScript/build and validate deployment configuration before creating a checkpoint.

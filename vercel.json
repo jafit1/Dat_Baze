@@ -1,0 +1,22 @@
+{
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist/public",
+  "rewrites": [
+    {
+      "source": "/manus-storage/vaultmark-logo_236b87a4.png",
+      "destination": "/assets/vaultmark-logo.svg"
+    },
+    {
+      "source": "/manus-storage/vault-pattern_0023c108.png",
+      "destination": "/assets/vault-pattern.svg"
+    },
+    {
+      "source": "/manus-storage/vault-empty-state_a0c000d6.png",
+      "destination": "/assets/vault-empty-state.svg"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
