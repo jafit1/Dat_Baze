@@ -61,3 +61,13 @@
 - [x] Audit Manus runtime dependencies, Vite output, and Manus-specific asset references.
 - [x] Add Vercel configuration and isolate or remove Manus-only runtime integrations where safe.
 - [x] Run TypeScript/build and validate deployment configuration before creating a checkpoint.
+
+# Follow-up Firebase loading, auth feedback, and debounced search
+
+- [x] Inspect Firebase auth/data loading, current toast usage, and search state.
+- [x] Add a responsive loading skeleton while Firebase auth or vault data is loading.
+- [x] Add success/error toast feedback for login and operational failures.
+- [x] Add debounced search state and accessible feedback for filtered results.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+Verification note: auth entry screen remains readable and responsive at desktop and 375px mobile; active Firebase login and vault flows still need interaction testing with configured credentials.
