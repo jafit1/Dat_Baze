@@ -41,3 +41,9 @@
 - [x] Inspect the marked container overflow and Service name label context.
 - [x] Hide the unnecessary right scrollbar without clipping necessary content, and remove the marked Service name label.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up dropdown polish
+
+- [x] Inspect all native select elements and the marked dropdown context.
+- [x] Apply consistent, compact, accessible dropdown styling across the interface.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
