@@ -78,3 +78,9 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [ ] Create a deployment commit and push the project to `https://github.com/jafit1/Dat_Baze`.
 - [ ] Deploy the pushed project to Vercel with the configured static build and required Firebase environment variables.
 - [ ] Verify the GitHub branch, Vercel deployment URL, SPA routing, and build status; document any blocked secrets or login steps.
+
+# Follow-up remove local preview option
+
+- [x] Inspect the auth screen for the local preview button and related handler.
+- [x] Remove the “Lihat preview lokal” option without affecting authentication actions.
+- [x] Run TypeScript/build and verify the updated app in preview.
