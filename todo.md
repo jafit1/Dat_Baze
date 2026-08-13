@@ -71,3 +71,10 @@
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
 
 Verification note: auth entry screen remains readable and responsive at desktop and 375px mobile; active Firebase login and vault flows still need interaction testing with configured credentials.
+
+# Follow-up GitHub push and Vercel deployment
+
+- [ ] Audit Git remote, repository state, GitHub authentication, Vercel CLI/project access, and deployment environment requirements.
+- [ ] Create a deployment commit and push the project to `https://github.com/jafit1/Dat_Baze`.
+- [ ] Deploy the pushed project to Vercel with the configured static build and required Firebase environment variables.
+- [ ] Verify the GitHub branch, Vercel deployment URL, SPA routing, and build status; document any blocked secrets or login steps.
