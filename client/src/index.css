@@ -34,3 +34,48 @@
 .tag-color-option.selected { box-shadow: 0 0 0 2px #fff, 0 0 0 3px #1FACFF; }
 @media (max-width: 640px) { .tag-color-options { width: 100%; margin-left: 18px; } }
 @media (prefers-reduced-motion: reduce) { .tag-color-option { transition: none; } }
+
+
+/* Dark mode: keep the secure workspace calm, readable, and low-glare while preserving Vault Blue as the trust signal. */
+.dark { color-scheme: dark; }
+.dark html, .dark body { background: #0a1520; color: #dbe8f2; }
+.dark .app-shell { background: #0a1520; }
+.dark .app-sidebar { border-color: #203849; background: rgba(11, 27, 40, .98); }
+.dark .topbar { border-color: #203849; background: rgba(10, 21, 32, .88); }
+.dark .vault-summary { border-color: #203849; background: #0d1b28; }
+.dark .search-wrap, .dark .account-row, .dark .empty-state, .dark .setting-card, .dark .lock-card, .dark .modal-card { border-color: #254457; background: #102332; color: #dbe8f2; }
+.dark .security-card { border-color: #254457; background: #0e1d2b; color: #a9bdcc; }
+.dark .nav-item { color: #9eb3c2; }
+.dark .nav-item:hover { background: #142d3e; color: #e5f4fb; }
+.dark .nav-item.active { background: #123c55; color: #77d1ff; }
+.dark .nav-count, .dark .eyebrow, .dark .setting-card p, .dark .accounts-section .text-slate-400, .dark .account-row .text-slate-400 { color: #8197a8 !important; }
+.dark .search-wrap input, .dark .sort-control select, .dark .select-control { color: #dbe8f2; background: transparent; }
+.dark .search-wrap input::placeholder { color: #71899b; }
+.dark .sort-control, .dark .select-control { border-color: #29485b; background: #102332; color: #b8cbd7; }
+.dark .tag-filter { color: #a9bdcc; }
+.dark .tag-filter:hover { background: #142d3e; }
+.dark .tag-filter.selected { background: #123c55; color: #77d1ff; }
+.dark .view-toggle { background: #132b3b; }
+.dark .view-toggle button.active { background: #214257; color: #77d1ff; }
+.dark .account-row:hover { border-color: #317b9e; box-shadow: 0 12px 30px rgba(0,0,0,.24); }
+.dark .account-row h4, .dark .setting-card h3, .dark .accounts-section h3, .dark .modal-card h2, .dark .confirm-card h2 { color: #e7f3f9 !important; }
+.dark .account-row .bg-slate-50, .dark .setting-card .bg-slate-50 { background: #183143 !important; color: #b9ceda !important; }
+.dark .totp-card { background: #123247; }
+.dark .icon-button:hover { background: #173548; color: #e6f4fa; }
+.dark .modal-backdrop { background: rgba(2, 9, 15, .64); }
+.dark .modal-card label { color: #aac0cd; }
+.dark .modal-card input { border-color: #29485b; background: #0d1d2a; color: #e7f3f9; }
+.dark .modal-card input::placeholder { color: #71899b; }
+.dark .confirm-mark { background: #123c55; }
+.dark .danger-card { border-color: #5b3033; background: #25181d; }
+.dark .danger-icon { background: #4a2529; }
+.dark .auth-shell { background: #0a1520; }
+.dark .auth-card { background: #0a1520; }
+.dark .auth-aside { background: #0e1f2d; }
+.dark .auth-card h1, .dark .auth-aside p { color: #e7f3f9 !important; }
+.dark .auth-card input { border-color: #29485b; background: #102332; color: #e7f3f9; }
+.dark .auth-card input::placeholder { color: #71899b; }
+.dark .status-capsule { border-color: #29485b; background: rgba(16, 35, 50, .86); color: #b8cbd7; }
+.dark .lock-shell { background: radial-gradient(circle at 50% 0%, #123247, #0a1520 58%); }
+.dark .lock-card p { color: #9eb3c2 !important; }
+.dark .lock-card input { border-color: #29485b; background: #102332; color: #e7f3f9; }
