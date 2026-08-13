@@ -47,3 +47,11 @@
 - [x] Inspect all native select elements and the marked dropdown context.
 - [x] Apply consistent, compact, accessible dropdown styling across the interface.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up sort popover, filter counts, and sorting skeleton
+
+- [x] Inspect sorting state, filter data, and existing dropdown/filter styles.
+- [x] Replace native Sort select with an accessible animated custom popover.
+- [x] Add account-count badges to each filter option.
+- [x] Add a brief reduced-motion-friendly skeleton/loading state when sorting changes.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.

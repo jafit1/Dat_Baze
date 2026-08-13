@@ -120,3 +120,33 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .sort-control, .dark .select-control { border-color: #29485b; background-color: #102332; color: #dbe8f2; }
 .dark .sort-control select, .dark .select-control { color: #dbe8f2; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a7bdca' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); }
 .dark .sort-direction { border-left-color: #29485b; }
+
+/* Minimalist Secure Workspace — popovers feel like a small, calm control surface. */
+.sort-trigger { display: inline-flex; min-width: 218px; min-height: 40px; align-items: center; gap: 10px; border: 1px solid #dfe9f0; border-radius: 12px; background: #fff; padding: 5px 10px 5px 12px; text-align: left; box-shadow: 0 5px 18px rgba(42,70,96,.04); transition: border-color 160ms ease, box-shadow 160ms ease, background-color 220ms ease, color 220ms ease; }
+.sort-trigger:hover, .sort-trigger:focus-visible, .sort-trigger.open { border-color: #8ddaff; box-shadow: 0 0 0 3px rgba(31,172,255,.12); outline: none; }
+.sort-trigger-label { color: #96a5b2; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.sort-trigger-value { min-width: 0; flex: 1; color: #344454; font-size: 12px; font-weight: 700; }
+.sort-trigger-icon { color: #7d91a0; transition: transform 180ms cubic-bezier(.23,1,.32,1); }
+.sort-trigger.open .sort-trigger-icon { transform: rotate(180deg); }
+.sort-popover-content { width: min(248px, calc(100vw - 32px)); border-color: #e5eef4; border-radius: 16px; background: #fff; padding: 8px; box-shadow: 0 18px 45px rgba(36,67,92,.14); }
+.sort-menu-heading { padding: 5px 9px 7px; color: #9aaab6; font-size: 9px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.sort-option { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 14px; border-radius: 10px; padding: 10px 9px; color: #566876; font-size: 12px; font-weight: 600; text-align: left; transition: background-color 140ms ease, color 140ms ease; }
+.sort-option:hover, .sort-option:focus-visible { background: #f4faff; color: #0d80c9; outline: none; }
+.sort-option.selected { background: #eef9ff; color: #0d80c9; font-weight: 750; }
+.tag-filter-label { display: inline-flex; min-width: 0; align-items: center; gap: 5px; }
+.tag-count { display: inline-flex; min-width: 20px; height: 18px; align-items: center; justify-content: center; border-radius: 999px; background: #f1f5f8; padding: 0 6px; color: #7c8e9b; font-size: 10px; font-weight: 800; line-height: 1; }
+.tag-count.active { background: #fff; color: #0d80c9; box-shadow: 0 1px 3px rgba(13,128,201,.1); }
+.account-skeleton { display: flex; min-height: 118px; align-items: center; gap: 14px; border: 1px solid #edf1f5; border-radius: 16px; background: #fff; padding: 16px; }
+.account-skeleton-mark { height: 48px; width: 6px; flex: none; border-radius: 999px; }
+.account-skeleton-copy { display: grid; min-width: 0; flex: 1; row-gap: 8px; }
+.account-skeleton-line { display: block; height: 10px; width: 52%; }
+.account-skeleton-line-lg { width: 76%; height: 13px; }
+.account-skeleton-pill { height: 28px; width: 72px; flex: none; border-radius: 9px; }
+.dark .sort-trigger, .dark .sort-popover-content, .dark .account-skeleton { border-color: #29485b; background: #102332; }
+.dark .sort-trigger-label, .dark .sort-menu-heading { color: #829aa9; }
+.dark .sort-trigger-value, .dark .sort-option { color: #dbe8f2; }
+.dark .sort-option:hover, .dark .sort-option:focus-visible, .dark .sort-option.selected { background: #123c55; color: #77d1ff; }
+.dark .tag-count { background: #183444; color: #9eb5c4; }
+.dark .tag-count.active { background: #0d2f43; color: #77d1ff; }
+@media (max-width: 767px) { .sort-trigger { min-width: 0; width: min(100%, 218px); } .sort-popover-content { width: min(248px, calc(100vw - 24px)); } }
+@media (prefers-reduced-motion: reduce) { .sort-trigger, .sort-trigger-icon, .sort-option { transition: none !important; } .sort-trigger.open .sort-trigger-icon { transform: none; } }
