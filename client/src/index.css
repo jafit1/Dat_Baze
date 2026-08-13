@@ -79,3 +79,12 @@
 .dark .lock-shell { background: radial-gradient(circle at 50% 0%, #123247, #0a1520 58%); }
 .dark .lock-card p { color: #9eb3c2 !important; }
 .dark .lock-card input { border-color: #29485b; background: #102332; color: #e7f3f9; }
+
+/* Minimalist Secure Workspace — theme changes should feel like a calm surface shift, never a flash. */
+html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 220ms ease, color 220ms ease; }
+.app-sidebar { transition: transform .25s cubic-bezier(.23,1,.32,1), box-shadow .25s ease, background-color 220ms ease, color 220ms ease, border-color 220ms ease; }
+.topbar, .vault-summary, .search-wrap, .sort-control, .view-toggle, .account-row, .empty-state, .security-card, .setting-card, .modal-card, .lock-card, .auth-card, .auth-aside, .status-capsule, .totp-card, .select-control { transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+.account-row { transition: background-color 220ms ease, color 220ms ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+@media (prefers-reduced-motion: reduce) {
+  html, body, .app-shell, .auth-shell, .lock-shell, .app-sidebar, .topbar, .vault-summary, .search-wrap, .sort-control, .view-toggle, .account-row, .empty-state, .security-card, .setting-card, .modal-card, .lock-card, .auth-card, .auth-aside, .status-capsule, .totp-card, .select-control { transition: none !important; }
+}

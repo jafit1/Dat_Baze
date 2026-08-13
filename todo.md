@@ -16,3 +16,10 @@
 - [x] Add a persisted dark mode preference with accessible Settings controls and readable contrast.
 - [x] Add Settings export choices for encrypted JSON and CSV download.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up theme transition and dashboard toggle
+
+- [x] Inspect ThemeContext, dashboard header controls, and global theme tokens.
+- [x] Add a top-right light/dark toggle with accessible labels and persisted state.
+- [x] Add smooth theme transitions across the interface with reduced-motion support.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
