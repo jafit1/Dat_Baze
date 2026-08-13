@@ -92,3 +92,10 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 /* One shared menu trigger keeps the drawer reachable on both mobile and desktop. */
 .topbar > button:first-of-type { display: grid !important; }
 .topbar > button:nth-of-type(2) { display: none !important; }
+.topbar > button:first-of-type svg { transform: rotate(0deg); transition: transform 220ms cubic-bezier(.23,1,.32,1); will-change: transform; }
+.app-shell:has(.app-sidebar.sidebar-open) .topbar > button:first-of-type svg { transform: rotate(90deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar > button:first-of-type svg,
+  .app-shell:has(.app-sidebar.sidebar-open) .topbar > button:first-of-type svg { transition: none !important; transform: none !important; }
+}

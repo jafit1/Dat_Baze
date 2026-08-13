@@ -29,3 +29,9 @@
 - [x] Inspect the two hamburger controls and preserve one responsive menu trigger.
 - [x] Remove the duplicate hamburger icon without losing mobile or desktop navigation access.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up hamburger icon transition
+
+- [x] Inspect hamburger markup and drawer open/close state.
+- [x] Add a smooth open/close animation to the hamburger icon with reduced-motion support.
+- [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
