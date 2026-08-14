@@ -25,6 +25,12 @@ For a production-grade policy, disable public email/password registration in Fir
 
 After the first Vercel deployment, add the Vercel production and preview domains to Firebase Authentication's authorized domains. If a custom domain is added later, add that domain as well.
 
+## Firebase Authentication preflight
+
+Before testing the login form, open **Firebase Console → Security → Authentication → Sign-in method**, enable **Email/password**, and save the provider. Then open **Authentication → Settings → Authorized domains** and add every host used to open the app, including `dat-baze.vercel.app`, any Vercel preview host used for testing, and `localhost` for local development. If Email/password is disabled or the project has no active Authentication configuration, Firebase can return `auth/configuration-not-found`; Vaultmark surfaces that condition instead of attempting a local or demo login.
+
+The client code calls `signInWithEmailAndPassword` and `createUserWithEmailAndPassword` only after Firebase is initialized. A failed Firebase configuration never unlocks the vault.
+
 ## Deployment settings
 
 Vercel can import the repository directly from GitHub. The repository uses `pnpm-lock.yaml`, so Vercel should detect pnpm automatically. The explicit settings are:

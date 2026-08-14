@@ -138,3 +138,22 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [x] Document any required deployment environment variables and provide the user with test steps.
 
 Verification note: after production commit `1d17219`, the live page no longer shows “Login dinonaktifkan” or “Firebase belum terkonfigurasi”; it loads the Firebase session state and presents the login controls.
+
+# Follow-up Firebase Auth configuration-not-found
+
+- [ ] Audit the Firebase Auth initialization, project ID, deployment config, and live authorized-domain assumptions.
+- [ ] Improve client-side error mapping for `auth/configuration-not-found` without bypassing Firebase validation.
+- [ ] Verify the required Firebase Console provider and domain settings for `dat-baze`.
+- [ ] Run TypeScript/build and document the exact final steps needed to test login and password reset.
+
+Diagnostic note: Firebase’s official password-auth setup requires enabling the Email/password provider in Authentication → Sign-in method; the official docs also use `signInWithEmailAndPassword`. The Firebase Console for `dat-baze` currently requires Google sign-in in this browser, so provider/domain status cannot be changed here without the project owner’s authenticated session. References: https://firebase.google.com/docs/auth/web/password-auth and https://firebase.google.com/docs/auth/web/start.
+
+Console finding: Authentication is now initialized, but the Sign-in method page still says “Get started with Firebase Auth by adding your first sign-in method”; Email/Password appears as an available provider and is not yet enabled.
+
+Console update: Email/Password was enabled and saved successfully; Firebase displayed “Success: Email/Password enabled.”
+
+Console finding: Authorized domains currently contain `localhost`, `dat-baze.firebaseapp.com`, and `dat-baze.web.app`; `dat-baze.vercel.app` is not listed yet.
+
+Console update: `dat-baze.vercel.app` was added successfully to Firebase Authentication Authorized domains.
+
+Live verification: submitting an intentionally incorrect password for `maxluno47@gmail.com` now returns `Firebase: Error (auth/invalid-credential)`, confirming Firebase Auth is active and the password is validated server-side.
