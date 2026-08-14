@@ -141,12 +141,19 @@ Verification note: after production commit `1d17219`, the live page no longer sh
 
 # Follow-up Firebase Auth configuration-not-found
 
-- [ ] Audit the Firebase Auth initialization, project ID, deployment config, and live authorized-domain assumptions.
-- [ ] Improve client-side error mapping for `auth/configuration-not-found` without bypassing Firebase validation.
-- [ ] Verify the required Firebase Console provider and domain settings for `dat-baze`.
+- [x] Audit the Firebase Auth initialization, project ID, deployment config, and live authorized-domain assumptions.
+- [x] Improve client-side error mapping for `auth/configuration-not-found` without bypassing Firebase validation.
+- [x] Verify the required Firebase Console provider and domain settings for `dat-baze`.
 - [ ] Run TypeScript/build and document the exact final steps needed to test login and password reset.
 
 Diagnostic note: Firebase’s official password-auth setup requires enabling the Email/password provider in Authentication → Sign-in method; the official docs also use `signInWithEmailAndPassword`. The Firebase Console for `dat-baze` currently requires Google sign-in in this browser, so provider/domain status cannot be changed here without the project owner’s authenticated session. References: https://firebase.google.com/docs/auth/web/password-auth and https://firebase.google.com/docs/auth/web/start.
+
+# Active recovery: Firebase configuration unavailable at login
+
+- [x] Inspect the live JavaScript configuration and Vercel/Manus environment variable exposure without logging or exposing secret values.
+- [x] Confirm the Firebase web app config maps to project `dat-baze` and ensure the initialization guard does not reject valid public web config.
+- [x] Improve the login error message so missing Firebase configuration is distinguished from Firebase Auth provider or authorized-domain errors.
+- [ ] Run `pnpm check`, `pnpm build`, preview verification, and save a new checkpoint after the fix.
 
 # Follow-up Edit screen element selection
 
