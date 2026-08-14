@@ -129,3 +129,10 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [x] Commit the latest authentication hardening, profile image persistence, and browser-session changes.
 - [x] Push the commit to `https://github.com/jafit1/Dat_Baze` on the main branch.
 - [x] Verify the remote commit and provide the repository/live testing URL to the user.
+
+# Follow-up live Firebase configuration
+
+- [ ] Audit Firebase environment variable names, Vite exposure, and live deployment configuration.
+- [ ] Restore Firebase initialization on the live build without bypassing server-side password validation.
+- [ ] Verify the live auth gate, production build, and Firebase configuration error handling.
+- [ ] Document any required deployment environment variables and provide the user with test steps.
