@@ -206,3 +206,12 @@ Google provider setup status: Google was selected from Add new provider, the Ena
 Google provider save status: Firebase provider dialog is showing a loading state immediately after Save was pressed; wait for the provider table to confirm success.
 
 Google provider verification: Firebase Authentication now lists both Email/Password and Google with status `Enabled` for project `dat-baze`.
+
+# Follow-up profile, login history, and audit log
+
+- [x] Audit current AuthScreen error mapping, ProfileMenu, session state, Firestore adapter, and Security Rules.
+- [x] Add clear login errors for invalid credentials, account not found, provider configuration, and network failures.
+- [x] Add a user profile page with account information and login history.
+- [x] Record login and logout events in a user-scoped Firestore audit log without storing passwords or secrets.
+- [x] Add Firestore rules and safe retention/limit behavior for audit log reads and writes.
+- [x] Run TypeScript/build, responsive verification, and save a new checkpoint.

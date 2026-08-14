@@ -31,6 +31,12 @@ Before testing the login form, open **Firebase Console → Security → Authenti
 
 The client code calls `signInWithEmailAndPassword` and `createUserWithEmailAndPassword` only after Firebase is initialized. A failed Firebase configuration never unlocks the vault.
 
+## Google Sign-In, profile, and audit log
+
+For Google Sign-In, enable **Google** in **Firebase Console → Authentication → Sign-in method** after completing the Google Auth Platform branding flow. The application still enforces the `maxluno47@gmail.com` allowlist after the popup returns, so a Google account outside the allowlist is signed out and cannot open the vault. Keep `dat-baze.vercel.app` and every preview hostname used for testing in Authorized domains.
+
+The profile surface reads Firebase account metadata and the user-owned `users/{uid}/profile/settings` document. Login and logout records are written only to `users/{uid}/activity/{eventId}` and contain event type, provider method, timestamp, user agent, and email; they never contain passwords, master keys, or vault ciphertext. Deploy the accompanying `firestore.rules` after enabling the feature. The rules allow the authenticated owner to read their own activity and create validated `login`/`logout` records, while updates and deletes are denied.
+
 ## Deployment settings
 
 Vercel can import the repository directly from GitHub. The repository uses `pnpm-lock.yaml`, so Vercel should detect pnpm automatically. The explicit settings are:

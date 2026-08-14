@@ -17,6 +17,7 @@ import SettingsViewComponent, { type SettingsViewProps } from "@/components/Sett
 import PasswordChangeRequired from "@/components/PasswordChangeRequired";
 import { useProfile } from "@/hooks/useProfile";
 import { ALLOWED_LOGIN_EMAIL, isAllowedLoginEmail, PROFILE_DOCUMENT_ID } from "@/lib/auth-policy";
+import { recordAuditEvent } from "@/lib/audit";
 import { useTheme } from "../contexts/ThemeContext";
 
 const TOAST_DURATION_KEY = "vaultmark-toast-duration";
@@ -32,7 +33,10 @@ function getAuthErrorMessage(error: unknown, action: "login" | "register" | "res
   const code = typeof error === "object" && error !== null && "code" in error ? String((error as { code?: unknown }).code) : "";
   if (code === "auth/configuration-not-found" || code === "auth/operation-not-allowed") return { title: "Firebase Authentication belum aktif", description: "Aktifkan provider Email/password di Firebase Console → Authentication → Sign-in method, lalu tambahkan domain live pada Authentication → Settings → Authorized domains." };
   if (code === "auth/invalid-api-key" || code === "auth/project-not-found" || code === "auth/app-not-authorized") return { title: "Konfigurasi Firebase tidak cocok", description: "Periksa VITE_FIREBASE_API_KEY, project ID, dan konfigurasi Web App pada deployment." };
-  if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found" || code === "auth/invalid-login-credentials") return { title: action === "reset" ? "Email belum dapat diproses" : "Email atau password salah", description: action === "reset" ? "Pastikan email allowlist sudah terdaftar di Firebase Authentication." : "Periksa kembali kredensial Firebase Anda." };
+  if (code === "auth/user-not-found") return { title: "Akun belum terdaftar", description: action === "reset" ? "Email ini belum terdaftar di Firebase Authentication." : "Gunakan Buat akun baru terlebih dahulu, atau periksa kembali alamat email Anda." };
+  if (code === "auth/email-already-in-use") return { title: "Akun sudah terdaftar", description: "Gunakan Masuk ke vault atau pilih Lupa Password untuk membuat password baru." };
+  if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/invalid-login-credentials") return { title: action === "reset" ? "Email belum dapat diproses" : "Login gagal", description: action === "reset" ? "Pastikan email allowlist sudah terdaftar di Firebase Authentication." : "Email atau password tidak cocok. Jika akun belum pernah dibuat, gunakan Buat akun baru." };
+  if (code === "auth/user-disabled") return { title: "Akun dinonaktifkan", description: "Akun ini tidak dapat digunakan. Hubungi administrator Firebase untuk pemeriksaan lebih lanjut." };
   if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") return { title: "Login Google dibatalkan", description: "Jendela Google ditutup sebelum autentikasi selesai." };
   if (code === "auth/popup-blocked") return { title: "Popup Google diblokir", description: "Izinkan popup untuk Vaultmark, lalu coba Login Google lagi." };
   if (code === "auth/unauthorized-domain") return { title: "Domain belum diizinkan", description: "Tambahkan domain live Vaultmark pada Firebase Console → Authentication → Settings → Authorized domains." };
@@ -110,7 +114,7 @@ function AuthScreen() {
     if (password.length < 6) { toast.error("Password terlalu pendek", { description: "Gunakan minimal 6 karakter." }); return; }
     if (!auth) { toast.error("Login dinonaktifkan", { description: "Firebase belum terkonfigurasi. Password tidak boleh melewati validasi server." }); return; }
     setAuthBusy(true); setBusyMode("password");
-    try { await applyPersistence(); register ? await createUserWithEmailAndPassword(auth, trimmedEmail, password) : await signInWithEmailAndPassword(auth, trimmedEmail, password); }
+    try { await applyPersistence(); const credentials = register ? await createUserWithEmailAndPassword(auth, trimmedEmail, password) : await signInWithEmailAndPassword(auth, trimmedEmail, password); try { await recordAuditEvent(credentials.user, "login", "password"); } catch { toast.warning("Login berhasil, riwayat belum tersimpan", { description: "Sesi aktif, tetapi aktivitas login belum dapat dicatat." }); } }
     catch (error) { const feedback = getAuthErrorMessage(error, register ? "register" : "login"); toast.error(feedback.title, { description: feedback.description }); }
     finally { setAuthBusy(false); setBusyMode(null); }
   };
@@ -127,6 +131,7 @@ function AuthScreen() {
         toast.error("Akun Google tidak diizinkan", { description: `Gunakan akun Google ${ALLOWED_LOGIN_EMAIL} untuk masuk ke Vaultmark.` });
         return;
       }
+      try { await recordAuditEvent(result.user, "login", "google"); } catch { toast.warning("Login Google berhasil, riwayat belum tersimpan", { description: "Sesi aktif, tetapi aktivitas login belum dapat dicatat." }); }
       toast.success("Login Google berhasil", { description: "Sesi Firebase Anda sudah aktif." });
     } catch (error) {
       const feedback = getAuthErrorMessage(error, "login");
@@ -150,7 +155,7 @@ export default function Home() { const { theme, toggleTheme } = useTheme(); cons
   useEffect(() => { if (!user || !db || !unlocked) { setVaultLoading(false); return; } let cancelled = false; setVaultLoading(true); (async () => { try { const snap = await getDocs(collection(db, `users/${user.uid}/accounts`)); const rows: VaultAccount[] = []; for (const item of snap.docs) { try { rows.push(await decryptAccount(item.data() as EncryptedRecord, master)); } catch { /* wrong key stays invisible */ } } if (!cancelled) setAccounts(rows); } catch (error) { if (!cancelled) toast.error("Data vault gagal dimuat", { description: error instanceof Error ? error.message : "Periksa koneksi dan coba lagi.", duration: getToastDuration() }); } finally { if (!cancelled) setVaultLoading(false); } })(); return () => { cancelled = true; }; }, [user, db, unlocked, master]);
   useEffect(() => { if (!sidebarOpen) return; const closeOnOutsideClick = (event: PointerEvent) => { const drawer = document.querySelector(".app-sidebar"); if (drawer && !drawer.contains(event.target as Node)) { setSidebarOpen(false); setMobileNav(false); } }; document.addEventListener("pointerdown", closeOnOutsideClick); return () => document.removeEventListener("pointerdown", closeOnOutsideClick); }, [sidebarOpen]);
   useEffect(() => { if (!unlocked) return; const reset = () => { window.clearTimeout(timer.current); timer.current = window.setTimeout(() => { setLocked(true); setUnlocked(false); setMaster(""); toast("Vault dikunci otomatis", { description: "Masukkan Master Password untuk melanjutkan." }); }, lockMinutes * 60_000); }; ["mousemove", "keydown", "click", "scroll"].forEach(e => window.addEventListener(e, reset)); reset(); return () => { ["mousemove", "keydown", "click", "scroll"].forEach(e => window.removeEventListener(e, reset)); window.clearTimeout(timer.current); }; }, [unlocked, lockMinutes]);
-  const handleLogout = async () => { setSidebarOpen(false); setMobileNav(false); setMustChangePassword(false); setProfileLoading(false); try { if (auth && user) await signOut(auth); setUser(null); setUnlocked(false); setLocked(false); setMaster(""); setAccounts([]); toast.success("Logout berhasil", { description: "Sesi Vaultmark telah ditutup.", duration: getToastDuration() }); } catch (error) { toast.error("Logout belum berhasil", { description: error instanceof Error ? error.message : "Coba lagi.", duration: getToastDuration() }); } };
+  const handleLogout = async () => { setSidebarOpen(false); setMobileNav(false); setMustChangePassword(false); setProfileLoading(false); try { if (auth && user) { try { await recordAuditEvent(user, "logout", user.providerData.some(item => item.providerId === "google.com") ? "google" : "password"); } catch { toast.warning("Logout berhasil, riwayat belum tersimpan", { description: "Aktivitas logout tidak dapat dicatat saat ini." }); } await signOut(auth); } setUser(null); setUnlocked(false); setLocked(false); setMaster(""); setAccounts([]); toast.success("Logout berhasil", { description: "Sesi Vaultmark telah ditutup.", duration: getToastDuration() }); } catch (error) { toast.error("Logout belum berhasil", { description: error instanceof Error ? error.message : "Coba lagi.", duration: getToastDuration() }); } };
   const handlePasswordChange = async (nextPassword: string) => { if (!user || !auth || !db) throw new Error("Sesi autentikasi belum siap."); await updatePassword(user, nextPassword); await setDoc(doc(db, `users/${user.uid}/profile/${PROFILE_DOCUMENT_ID}`), { email: user.email, mustChangePassword: false, updatedAt: Date.now() }, { merge: true }); setMustChangePassword(false); toast.success("Password berhasil diganti", { description: "Vault siap digunakan dengan password baru.", duration: getToastDuration() }); };
   if (authLoading) return <VaultLoadingState label="Memverifikasi sesi aman..." />;
   if (profileLoading && user) return <VaultLoadingState label="Menyiapkan kebijakan keamanan akun..." />;
