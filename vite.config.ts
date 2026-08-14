@@ -18,5 +18,13 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
-  server: { port: 3000, strictPort: false, host: true },
+  server: {
+    port: 3000,
+    strictPort: false,
+    host: true,
+    // Keep the dev preview host explicit; do not use `true` here in production.
+    allowedHosts: [
+      "3000-i9164wvqb8j4tigmtms05-f21c7557.sg1.manus.computer",
+    ],
+  },
 });

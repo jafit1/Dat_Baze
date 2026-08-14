@@ -294,3 +294,23 @@ Final console routing update: direct Google Cloud Firestore Rules redirects to a
 Rules panel final update: Firebase Console now fully renders the Rules card and the default deny-all code, but the card remains read-only; only `Develop & Test`, `Rules Playground`, and `View the docs` are available, with no Edit/Publish CTA.
 
 Develop & Test update: opening the button displays only an Emulator Suite tutorial modal; it does not provide a Rules editor or Publish action. The user-scoped rules are currently only unsaved in the local browser editor state.
+
+# Follow-up preview host and layout editing
+
+- [x] Audit `vite.config.ts` and the active preview host configuration.
+- [x] Add a safe explicit `server.allowedHosts` entry for the Manus preview host without weakening production deployment settings.
+- [x] Restart and verify the preview, then identify the layout surface the user wants to edit.
+- [ ] Run TypeScript/build and save a checkpoint after the layout changes are agreed and implemented.
+
+Preview verification: `https://3000-i9164wvqb8j4tigmtms05-f21c7557.sg1.manus.computer` now loads Vaultmark normally after adding the explicit Vite host allowlist. No layout changes have been made yet; the next edit should follow the user's chosen surface and visual direction.
+
+# Follow-up modern responsive layout pass
+
+- [x] Audit current AuthScreen, dashboard/grid, sidebar-header, Settings/profile, and popup/modal structure before styling.
+- [x] Modernize AuthScreen with stronger hierarchy, compact mobile spacing, and responsive form/evidence behavior.
+- [x] Modernize dashboard account grid, sidebar, and header across desktop, tablet, and mobile breakpoints.
+- [x] Modernize Settings/profile and popup/modal surfaces without changing security logic or focus behavior.
+- [x] Run TypeScript/build and capture representative desktop/mobile screenshots for visual verification.
+- [ ] Save a checkpoint after the complete layout pass.
+
+Layout verification: `pnpm check` and `pnpm build` pass. AuthScreen was reviewed at 1280×900 and 390×844; the mobile form remains readable with no horizontal overflow. The independent review returned “Style holds up — ship it.” Dashboard, Settings/profile, and modal responsiveness are covered by source-level breakpoint verification because they require an authenticated vault session to render.
