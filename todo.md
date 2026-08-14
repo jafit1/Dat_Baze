@@ -148,6 +148,14 @@ Verification note: after production commit `1d17219`, the live page no longer sh
 
 Diagnostic note: Firebase’s official password-auth setup requires enabling the Email/password provider in Authentication → Sign-in method; the official docs also use `signInWithEmailAndPassword`. The Firebase Console for `dat-baze` currently requires Google sign-in in this browser, so provider/domain status cannot be changed here without the project owner’s authenticated session. References: https://firebase.google.com/docs/auth/web/password-auth and https://firebase.google.com/docs/auth/web/start.
 
+# Follow-up Edit screen element selection
+
+- [x] Audit whether the Edit screen is provided by the Manus preview shell or by application code, and inspect host/overlay/pointer-event conflicts.
+- [x] Restore the development-only JSX location transform so the preview editor can map and mark JSX elements without intercepting normal app interactions.
+- [x] Expand the Vite preview host allowlist to the Manus subdomain suffix plus local development hosts.
+- [x] Verify the preview emits `data-loc` markers, shows numbered selection outlines, and passes TypeScript/production build checks.
+- [x] Verify the preview remains responsive on mobile before saving the checkpoint.
+
 Console finding: Authentication is now initialized, but the Sign-in method page still says “Get started with Firebase Auth by adding your first sign-in method”; Email/Password appears as an available provider and is not yet enabled.
 
 Console update: Email/Password was enabled and saved successfully; Firebase displayed “Success: Email/Password enabled.”
