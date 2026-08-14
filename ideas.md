@@ -78,3 +78,4 @@ Use the generated shield-key symbol as the mark. Pair it with the custom wordmar
 - Auth screens keep the sign-in form as the primary task; the reassurance panel is quieter product evidence with restrained display type.
 - Vault Blue stays concentrated in the primary action, rail, lock, status capsule, and verification cues; large surfaces remain white or cool-neutral.
 - Security decoration uses a disciplined grid and record-like geometry instead of an atmospheric hero treatment.
+- Reassurance panels use concrete vault evidence—encryption state, browser control, and verification readiness—while Vault Blue remains limited to trusted action and active security cues.

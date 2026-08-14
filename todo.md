@@ -157,3 +157,52 @@ Console finding: Authorized domains currently contain `localhost`, `dat-baze.fir
 Console update: `dat-baze.vercel.app` was added successfully to Firebase Authentication Authorized domains.
 
 Live verification: submitting an intentionally incorrect password for `maxluno47@gmail.com` now returns `Firebase: Error (auth/invalid-credential)`, confirming Firebase Auth is active and the password is validated server-side.
+
+# Follow-up Remember Me, login loading, and Google Sign-In
+
+- [x] Audit current browser persistence and AuthScreen submit state.
+- [x] Add an explicit Remember Me persistence choice without storing raw passwords.
+- [x] Add accessible login loading feedback and prevent duplicate submissions.
+- [x] Add Google Sign-In with allowlist enforcement and safe Firebase error handling.
+- [x] Document and verify Firebase Google provider plus authorized domain settings.
+- [x] Run TypeScript/build, responsive browser verification, and save a new checkpoint.
+
+Firebase Console finding: Email/Password is enabled for project `dat-baze`; Google appears in Add new provider but is not yet listed among enabled providers. The current Google provider setup panel is open and ready for activation.
+
+Firebase Console update: Project settings → General shows project/app metadata but no support-email control. The Google provider flow still requires a support email selection before its Save button becomes available.
+
+Console access note: Authentication Settings has no support-email editor; the Google Cloud OAuth consent URL opened under an account with no project selected, so the provider setup remains pending until a valid project/support email is available.
+
+Google Cloud finding: OAuth/Auth Platform redirected to project `drive-uyeee` (“9Drive Uyeee”) instead of Firebase project `dat-baze`; the correct project must be selected before configuring the consent screen/support email.
+
+Google Cloud update: the project picker lists `Dat Baze` with project ID `dat-baze`; it is available to select for the OAuth configuration.
+
+Google Cloud picker status: after entering `dat-baze` into the verified “Search projects and folders” field, the picker shows `Loading`; source URL: https://console.cloud.google.com/auth/overview?project=drive-uyeee.
+
+Google Auth Platform status: direct navigation to project `dat-baze` succeeded. Branding setup is now open and requires App name plus User support email before Google Sign-In OAuth configuration can be created.
+
+Google Auth Platform form detail: the User support email dropdown offers `maxluno47@gmail.com` and “No groups”; the allowlisted account email is available as the appropriate support email choice.
+
+Browser note: the Google Auth Platform snapshot became stale while advancing from the App Information step and the browser session is currently at `about:blank`; resume from `https://console.cloud.google.com/auth/overview/create?project=dat-baze` if needed.
+
+Browser retry note: after selecting `maxluno47@gmail.com`, advancing with the stale Next target again reset the browser to `about:blank`; the direct Google Auth Platform URL remains the recovery path.
+
+OAuth setup note: on the restored form, App name `Vaultmark` and support email `maxluno47@gmail.com` were selected; clicking Next still reset the browser to `about:blank`, so Google Auth Platform branding creation is not yet confirmed.
+
+OAuth recovery status: direct URL now loads correctly with project `Dat Baze` selected; App name and User support email fields are blank again, ready to be filled using the current DOM indexes.
+
+OAuth form status: App name `Vaultmark` and User support email `maxluno47@gmail.com` are populated in the current project configuration form; the Next button is visible and enabled for the next step.
+
+OAuth automation note: the Next target became stale and the browser reset to `about:blank` again; Firebase Google provider code is ready, but Google Cloud branding cannot yet be confirmed as completed through this browser session.
+
+OAuth verification: Google Auth Platform now shows “OAuth configuration created!” for project `dat-baze`; no OAuth clients are configured yet, which is acceptable for Firebase-managed Google Sign-In popup setup.
+
+Firebase provider verification status: after returning to Authentication → Sign-in method, the initial snapshot still shows “Get started with Firebase Auth by adding your first sign-in method,” with Email/Password and Google listed as options; wait for the provider list to finish loading before changing settings.
+
+Firebase provider final check: after loading completes, Email/Password is marked Enabled. Google is not yet in the provider table; use Add new provider to activate it.
+
+Google provider setup status: Google was selected from Add new provider, the Enable toggle is on, and Firebase has enabled the Save button. No external client ID whitelist is required for this web app.
+
+Google provider save status: Firebase provider dialog is showing a loading state immediately after Save was pressed; wait for the provider table to confirm success.
+
+Google provider verification: Firebase Authentication now lists both Email/Password and Google with status `Enabled` for project `dat-baze`.
