@@ -156,6 +156,17 @@ Diagnostic note: Firebase’s official password-auth setup requires enabling the
 - [x] Verify the preview emits `data-loc` markers, shows numbered selection outlines, and passes TypeScript/production build checks.
 - [x] Verify the preview remains responsive on mobile before saving the checkpoint.
 
+# Follow-up Add Account and Profile modal cleanup
+
+- [x] Audit the Add Account field grouping and the ProfileView modal stacking/overflow.
+- [x] Simplify the required Email presentation while preserving service-name data integrity.
+- [x] Repair ProfileView overlay positioning, z-index, width, and scroll behavior on desktop/mobile.
+- [x] Run TypeScript/build and verify both surfaces before saving a checkpoint.
+
+Implementation note: AccountModal now presents a single readable field column with Email given a prominent full-width input while retaining the service-name value for vault data integrity. ProfileView now uses a contained fixed overlay, sticky header, internal scroll, responsive width, and mobile-safe spacing. `pnpm check` and `pnpm build` pass; authenticated visual inspection remains the final check.
+
+Deployment verification: `https://dat-baze.vercel.app` currently serves an older two-column AuthScreen, while `https://accvault-lgt7phvq.manus.space` serves the newer Vaultmark build. No authenticated browser session is available on these pages for opening ProfileView; code-level modal verification and desktop/mobile preview checks are complete.
+
 Console finding: Authentication is now initialized, but the Sign-in method page still says “Get started with Firebase Auth by adding your first sign-in method”; Email/Password appears as an available provider and is not yet enabled.
 
 Console update: Email/Password was enabled and saved successfully; Firebase displayed “Success: Email/Password enabled.”
