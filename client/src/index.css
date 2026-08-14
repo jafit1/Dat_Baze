@@ -219,6 +219,9 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .profile-trigger:hover, .profile-trigger:focus-visible { border-color: #d9edf7; background: #f4fbff; color: #1f3445; outline: none; }
 .profile-trigger:active { transform: scale(.98); }
 .profile-trigger-email { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 650; }
+.avatar { overflow: hidden; }
+.avatar img { height: 100%; width: 100%; object-fit: cover; }
+.profile-menu-email { overflow: hidden; color: #8b9aaa; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
 .profile-trigger-chevron { color: #91a3b2; transition: transform 180ms cubic-bezier(.23,1,.32,1); }
 .profile-menu-content { z-index: 80; width: 224px; padding: 8px; border: 1px solid #dcecf4; border-radius: 16px; background: rgba(255,255,255,.98); box-shadow: 0 18px 44px rgba(31,70,92,.14); transform-origin: var(--radix-popover-content-transform-origin); animation: profile-menu-in 160ms cubic-bezier(.23,1,.32,1); }
 .profile-menu-heading { display: grid; gap: 4px; padding: 8px 10px 10px; }
@@ -235,9 +238,43 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .profile-trigger:hover, .dark .profile-trigger:focus-visible { border-color: #2c5368; background: #142e3e; color: #edf7fb; }
 .dark .profile-menu-content { border-color: #294b5d; background: rgba(16,35,50,.98); box-shadow: 0 18px 44px rgba(0,0,0,.3); }
 .dark .profile-menu-heading strong { color: #e7f3f9; }
+.dark .profile-menu-email { color: #9eb5c4; }
 .dark .profile-menu-divider { background: #254457; }
 .dark .profile-menu-item { color: #b3c4cf; }
 .dark .profile-menu-item:hover, .dark .profile-menu-item:focus-visible { background: #16394b; color: #effaff; }
 .dark .profile-menu-item.danger:hover, .dark .profile-menu-item.danger:focus-visible { background: #42252e; color: #ffb7c0; }
 @media (max-width: 640px) { .profile-trigger { max-width: 44px; padding-right: 4px; } .profile-trigger-email, .profile-trigger-chevron { display: none; } .profile-menu-content { width: 210px; } }
 @media (prefers-reduced-motion: reduce) { .profile-trigger, .profile-trigger-chevron, .profile-menu-item { transition: none !important; } .profile-menu-content { animation: none; } }
+
+/* Minimalist Secure Workspace — profile editing uses one quiet surface with clear privacy cues. */
+.profile-setting-card { align-items: flex-start; }
+.profile-editor-fields { display: grid; gap: 12px; max-width: 560px; }
+.profile-preview-row { display: flex; align-items: center; gap: 12px; }
+.profile-preview { display: grid; height: 52px; width: 52px; flex: 0 0 auto; place-items: center; overflow: hidden; border-radius: 16px; background: #eaf7ff; color: #0d80c9; font-family: Manrope, sans-serif; font-size: 20px; font-weight: 800; box-shadow: 0 8px 20px rgba(31,172,255,.12); }
+.profile-preview img { height: 100%; width: 100%; object-fit: cover; }
+.profile-preview-copy { display: grid; min-width: 0; gap: 3px; }
+.profile-preview-copy strong { overflow: hidden; color: #334454; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.profile-preview-copy span, .profile-help { color: #8a99a8; font-size: 11px; line-height: 1.5; }
+.profile-field { display: grid; gap: 6px; }
+.profile-field > span { color: #536474; font-size: 11px; font-weight: 750; }
+.profile-field input { margin-top: 0; }
+.profile-help { display: flex; align-items: center; gap: 6px; margin-top: -2px; }
+.profile-error { margin-top: 10px; color: #c84f5a !important; font-size: 11px !important; }
+.auth-forgot-link { width: fit-content; margin: -2px 0 0 auto; color: #0d80c9; font-size: 11px; font-weight: 700; }
+.auth-forgot-link:hover, .auth-forgot-link:focus-visible { color: #08679f; text-decoration: underline; text-underline-offset: 3px; outline: none; }
+.dark .profile-preview { background: #123c55; color: #77d1ff; }
+.dark .profile-preview-copy strong, .dark .profile-field > span { color: #e7f3f9; }
+.dark .profile-preview-copy span, .dark .profile-help { color: #9eb5c4; }
+.dark .auth-forgot-link { color: #77d1ff; }
+.dark .auth-forgot-link:hover, .dark .auth-forgot-link:focus-visible { color: #b6e8ff; }
+@media (max-width: 640px) { .profile-setting-card { gap: 11px; padding: 16px; } .profile-preview-row { align-items: flex-start; } }
+@media (prefers-reduced-motion: reduce) { .profile-preview, .auth-forgot-link { transition: none !important; } }
+
+/* Auth refinement — the sign-in task leads; the security panel behaves as product evidence. */
+.auth-aside { background-color: #fbfdff; background-image: linear-gradient(rgba(31,172,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(31,172,255,.045) 1px, transparent 1px); background-size: 42px 42px; }
+.auth-aside > img { opacity: .2 !important; filter: grayscale(.18) saturate(.55); }
+.auth-aside > .relative { max-width: 390px; }
+.auth-aside .font-display { font-size: clamp(1.8rem, 3vw, 2.35rem); letter-spacing: -.045em; }
+.auth-aside .mb-6 { margin-bottom: 1.25rem; }
+.auth-aside .mt-7 { margin-top: 1.25rem; }
+.dark .auth-aside { background-color: #0e1b26; background-image: linear-gradient(rgba(119,209,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(119,209,255,.045) 1px, transparent 1px); }

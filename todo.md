@@ -99,3 +99,10 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [x] Restrict authentication to the configured allowed account without embedding a password in frontend code.
 - [x] Require the allowed account to change its initial password through Firebase and persisted profile metadata.
 - [x] Run TypeScript/build and responsive visual verification, then save a new checkpoint.
+
+# Follow-up profile settings and password reset
+
+- [x] Audit Settings profile surface, Firebase user profile metadata, and AuthScreen login actions.
+- [x] Add editable display name and secure public-photo URL persistence in Settings.
+- [x] Add accessible Forgot Password flow with Firebase reset email and allowlist validation.
+- [x] Run TypeScript/build and responsive auth/settings verification, then save a new checkpoint.

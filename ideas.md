@@ -75,3 +75,6 @@ Use the generated shield-key symbol as the mark. Pair it with the custom wordmar
 - The vaultmark lockup uses lowercase Manrope semibold with deliberate tracking and is treated as a unified mark-plus-wordmark, not a generic label.
 - Vault Blue #1FACFF appears only for trusted action, active security state, and verification cues.
 - The auth surface repeats the shield-key, rail, and status-capsule language as one coherent Vaultmark signature; secondary copy stays neutral so Vault Blue remains a trusted signal.
+- Auth screens keep the sign-in form as the primary task; the reassurance panel is quieter product evidence with restrained display type.
+- Vault Blue stays concentrated in the primary action, rail, lock, status capsule, and verification cues; large surfaces remain white or cool-neutral.
+- Security decoration uses a disciplined grid and record-like geometry instead of an atmospheric hero treatment.

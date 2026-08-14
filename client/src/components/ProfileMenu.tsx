@@ -1,28 +1,36 @@
 // Design philosophy: Minimalist Secure Workspace — profile actions are compact, calm, and clear about control.
 import { ChevronDown, LogOut, Settings2 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useProfile } from "@/hooks/useProfile";
+import { auth } from "@/lib/vault";
 
 type ProfileMenuProps = {
   email: string;
+  displayName?: string;
+  photoURL?: string;
   onSettings: () => void;
   onLogout: () => void;
 };
 
-export default function ProfileMenu({ email, onSettings, onLogout }: ProfileMenuProps) {
-  const initial = email.trim().charAt(0).toUpperCase() || "U";
+export default function ProfileMenu({ email, displayName, photoURL, onSettings, onLogout }: ProfileMenuProps) {
+  const profile = useProfile(auth?.currentUser ?? null);
+  const label = displayName?.trim() || profile.displayName.trim() || email;
+  const resolvedPhotoURL = photoURL?.trim() || profile.photoURL.trim();
+  const initial = label.trim().charAt(0).toUpperCase() || "U";
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button type="button" className="profile-trigger" aria-label="Buka menu profil" aria-haspopup="menu">
-          <span className="avatar" aria-hidden="true">{initial}</span>
-          <span className="profile-trigger-email">{email}</span>
+          <span className="avatar" aria-hidden="true">{resolvedPhotoURL ? <img src={resolvedPhotoURL} alt="" loading="lazy" referrerPolicy="no-referrer" /> : initial}</span>
+          <span className="profile-trigger-email">{label}</span>
           <ChevronDown className="profile-trigger-chevron size-4" aria-hidden="true" />
         </button>
       </PopoverTrigger>
       <PopoverContent align="end" sideOffset={10} className="profile-menu-content">
         <div className="profile-menu-heading">
           <span className="profile-menu-kicker">Signed in as</span>
-          <strong>{email}</strong>
+          <strong>{label}</strong>
+          <span className="profile-menu-email">{email}</span>
         </div>
         <div className="profile-menu-divider" />
         <button type="button" className="profile-menu-item" onClick={onSettings}>
@@ -37,4 +45,3 @@ export default function ProfileMenu({ email, onSettings, onLogout }: ProfileMenu
     </Popover>
   );
 }
-
