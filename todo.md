@@ -167,6 +167,13 @@ Implementation note: AccountModal now presents a single readable field column wi
 
 Deployment verification: `https://dat-baze.vercel.app` currently serves an older two-column AuthScreen, while `https://accvault-lgt7phvq.manus.space` serves the newer Vaultmark build. No authenticated browser session is available on these pages for opening ProfileView; code-level modal verification and desktop/mobile preview checks are complete.
 
+# Follow-up verify ProfileView click flow
+
+- [ ] Verify ProfileMenu opens ProfileView from the top-right action.
+- [ ] Verify ProfileView close button, outside click, Escape, focus trap, and internal scroll.
+- [ ] Verify ProfileView desktop/mobile layout with an authenticated session or documented fallback.
+- [ ] Run TypeScript/build and save a checkpoint after the flow is confirmed.
+
 Console finding: Authentication is now initialized, but the Sign-in method page still says “Get started with Firebase Auth by adding your first sign-in method”; Email/Password appears as an available provider and is not yet enabled.
 
 Console update: Email/Password was enabled and saved successfully; Firebase displayed “Success: Email/Password enabled.”

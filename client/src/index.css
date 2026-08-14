@@ -99,10 +99,6 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .modal-card { scrollbar-width: none; -ms-overflow-style: none; }
 .modal-card::-webkit-scrollbar { width: 0; height: 0; }
 
-/* The required service field stays available; only its visible label is omitted per the visual note. */
-.modal-card .mt-7.grid > label:first-child { font-size: 0; }
-.modal-card .mt-7.grid > label:first-child input { margin-top: 0; font-size: 14px; }
-
 @media (prefers-reduced-motion: reduce) {
   .topbar > button:first-of-type svg,
   .app-shell:has(.app-sidebar.sidebar-open) .topbar > button:first-of-type svg { transition: none !important; transform: none !important; }
@@ -327,13 +323,15 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 @media (prefers-reduced-motion: reduce) { .auth-loading-icon { animation: none !important; } .auth-google-button { transition: none !important; } .auth-google-button:active { transform: none; } }
 
 /* Minimalist Secure Workspace — profile history is a centered record surface: quiet neutrals, precise blue signals, and no decorative noise. */
-.profile-overlay { position: fixed; z-index: 80; inset: 0; display: grid; overflow: auto; place-items: start center; padding: clamp(18px, 5vh, 48px) 18px; background: rgba(15, 29, 41, .3); backdrop-filter: blur(8px); }
-.profile-page { width: min(100%, 900px); overflow: hidden; border: 1px solid rgba(207, 222, 231, .82); border-radius: 22px; background: #fff; box-shadow: 0 24px 70px rgba(30, 56, 78, .18); }
-.profile-page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 28px 30px 22px; border-bottom: 1px solid #edf2f5; }
+.profile-overlay { position: fixed; z-index: 120; inset: 0; display: flex; align-items: center; justify-content: center; overflow: auto; overscroll-behavior: contain; padding: clamp(14px, 4vh, 36px) clamp(12px, 3vw, 28px); background: rgba(15, 29, 41, .3); backdrop-filter: blur(8px); }
+.profile-page { position: relative; isolation: isolate; box-sizing: border-box; width: min(100%, 820px); max-height: min(820px, calc(100dvh - 28px)); margin: auto; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border: 1px solid rgba(207, 222, 231, .82); border-radius: 22px; background: #fff; box-shadow: 0 24px 70px rgba(30, 56, 78, .18); outline: none; }
+.profile-page:focus-visible { outline: 2px solid rgba(31,172,255,.65); outline-offset: 4px; }
+.profile-page-header { position: sticky; top: 0; z-index: 4; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 28px 30px 22px; border-bottom: 1px solid #edf2f5; background: rgba(255,255,255,.97); backdrop-filter: blur(14px); }
+.profile-page-header .icon-button { flex: 0 0 auto; }
 .profile-page-header h1 { color: #243746; }
 .profile-page-header p { color: #738494; }
-.profile-record-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 14px; padding: 18px 30px; background: #fbfdff; }
-.profile-identity-card, .profile-facts-card, .audit-card { border: 1px solid #e6eef3; border-radius: 16px; background: #fff; }
+.profile-record-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 14px; box-sizing: border-box; min-width: 0; padding: 18px 30px; background: #fbfdff; }
+.profile-identity-card, .profile-facts-card, .audit-card { box-sizing: border-box; min-width: 0; border: 1px solid #e6eef3; border-radius: 16px; background: #fff; }
 .profile-identity-card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 15px; padding: 20px; }
 .profile-large-avatar { display: grid; height: 72px; width: 72px; place-items: center; overflow: hidden; border-radius: 20px; background: #eaf7ff; color: #0d80c9; font-family: Manrope, sans-serif; font-size: 28px; font-weight: 800; box-shadow: 0 10px 24px rgba(31,172,255,.13); }
 .profile-large-avatar img { height: 100%; width: 100%; object-fit: cover; }
@@ -350,7 +348,7 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .profile-fact:last-child { border-bottom: 0; }
 .profile-fact > span { display: grid; min-width: 0; gap: 3px; }
 .profile-fact small { color: #8a99a8; font-size: 10px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; }
-.profile-fact strong { overflow: hidden; color: #344454; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.profile-fact strong { max-width: 100%; overflow: hidden; color: #344454; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
 .audit-card { margin: 0 30px 30px; padding: 20px; }
 .audit-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid #edf2f5; }
 .audit-card-header h2 { color: #243746; }
@@ -383,8 +381,16 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .profile-fact, .dark .audit-event, .dark .audit-card-header { border-color: #203849; }
 .dark .profile-fact strong, .dark .audit-event-copy strong { color: #dcecf4; }
 .dark .profile-fact small, .dark .audit-event-copy small, .dark .audit-event-copy em, .dark .audit-empty, .dark .audit-loading { color: #9eb5c4; }
-@media (max-width: 700px) { .profile-overlay { padding: 10px; } .profile-page-header { padding: 22px 18px 18px; } .profile-record-grid { grid-template-columns: 1fr; padding: 14px 18px; } .audit-card { margin: 0 18px 18px; padding: 16px; } }
+@media (max-width: 700px) { .profile-overlay { align-items: flex-start; padding: 10px; } .profile-page { max-height: calc(100dvh - 20px); border-radius: 18px; } .profile-page-header { padding: 18px 16px 16px; } .profile-page-header h1 { font-size: 1.45rem; } .profile-page-header p { max-width: 34ch; font-size: 11px; line-height: 1.5; } .profile-record-grid { grid-template-columns: 1fr; padding: 12px 16px; } .profile-identity-card { grid-template-columns: auto minmax(0, 1fr); padding: 16px; } .audit-card { margin: 0 16px 16px; padding: 16px; } .audit-card-header { align-items: center; } }
 @media (prefers-reduced-motion: reduce) { .profile-overlay, .profile-edit-button, .audit-event-icon, .audit-loading-dot { animation: none !important; transition: none !important; } .profile-edit-button:active { transform: none; } }
+
+/* Minimalist Secure Workspace — Add Account prioritizes Email while retaining service internally via the email fallback. */
+.modal-card .mt-7.grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.modal-card .mt-7.grid > label:first-child { display: none; }
+.modal-card .mt-7.grid > label:nth-child(2), .modal-card .mt-7.grid > label:nth-child(3), .modal-card .mt-7.grid > label:nth-child(4), .modal-card .mt-7.grid > label:nth-child(5) { grid-column: 1 / -1; }
+.modal-card .mt-7.grid > label:nth-child(2) input { min-height: 48px; }
+.dark .profile-page-header { background: rgba(11,24,36,.97); }
+.dark .modal-card .mt-7.grid > label:first-child { display: none; }
 
 /* Minimalist Secure Workspace — responsive modernization pass: clearer task hierarchy, calm surfaces, and deliberate mobile stacking. */
 html, body, #root { min-width: 0; overflow-x: hidden; }
@@ -511,39 +517,3 @@ html, body, #root { min-width: 0; overflow-x: hidden; }
 }
 
 .dark .auth-shell { background: #0b1822; }
-
-/* Minimalist Secure Workspace — Add Account keeps identity data available while giving the required Email field the clearest visual priority. */
-.modal-card .mt-7.grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-.modal-card .mt-7.grid > label:first-child,
-.modal-card .mt-7.grid > label:nth-child(2),
-.modal-card .mt-7.grid > label:nth-child(3),
-.modal-card .mt-7.grid > label:nth-child(4),
-.modal-card .mt-7.grid > label:nth-child(5) { grid-column: 1 / -1; }
-.modal-card .mt-7.grid > label:first-child { order: 0; }
-.modal-card .mt-7.grid > label:nth-child(2) { order: 1; }
-.modal-card .mt-7.grid > label:nth-child(3) { order: 2; }
-.modal-card .mt-7.grid > label:nth-child(4) { order: 3; }
-.modal-card .mt-7.grid > label:nth-child(5) { order: 4; }
-.modal-card .mt-7.grid > label:first-child input,
-.modal-card .mt-7.grid > label:nth-child(2) input { min-height: 48px; }
-
-/* Minimalist Secure Workspace — ProfileView is a single layered record surface, never a second page leaking into the dashboard. */
-.profile-overlay { z-index: 100; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; overscroll-behavior: contain; padding: clamp(14px, 5vh, 42px) 16px; }
-.profile-page { position: relative; isolation: isolate; width: min(100%, 820px); max-height: calc(100dvh - 28px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; }
-.profile-page-header { position: sticky; top: 0; z-index: 2; background: rgba(255,255,255,.97); backdrop-filter: blur(14px); }
-.profile-page-header .icon-button { flex: 0 0 auto; }
-.profile-record-grid, .audit-card { min-width: 0; }
-.profile-facts-card, .profile-identity-card, .audit-card { min-width: 0; }
-.profile-fact strong, .audit-event-copy small { overflow-wrap: anywhere; }
-.dark .profile-page-header { background: rgba(11,24,36,.97); }
-@media (max-width: 700px) {
-  .profile-overlay { padding: 10px; }
-  .profile-page { max-height: calc(100dvh - 20px); border-radius: 18px; }
-  .profile-page-header { padding: 18px 16px 16px; }
-  .profile-page-header h1 { font-size: 1.45rem; }
-  .profile-page-header p { max-width: 34ch; font-size: 11px; line-height: 1.5; }
-  .profile-record-grid { padding: 12px 16px; }
-  .profile-identity-card { grid-template-columns: auto minmax(0, 1fr); padding: 16px; }
-  .audit-card { margin: 0 16px 16px; padding: 16px; }
-  .audit-card-header { align-items: center; }
-}

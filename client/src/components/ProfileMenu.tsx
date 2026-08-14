@@ -16,6 +16,7 @@ type ProfileMenuProps = {
 };
 
 export default function ProfileMenu({ email, displayName, photoURL, onSettings, onLogout }: ProfileMenuProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const currentUser = auth?.currentUser ?? null;
   const profile = useProfile(currentUser);
@@ -24,7 +25,7 @@ export default function ProfileMenu({ email, displayName, photoURL, onSettings, 
   const resolvedPhotoURL = photoURL?.trim() || profile.photoURL.trim();
   const initial = label.trim().charAt(0).toUpperCase() || "U";
   return (<>
-    <Popover>
+    <Popover open={menuOpen && !profileOpen} onOpenChange={setMenuOpen}>
       <PopoverTrigger asChild>
         <button type="button" className="profile-trigger" aria-label="Buka menu profil" aria-haspopup="menu">
           <span className="avatar" aria-hidden="true">{resolvedPhotoURL ? <img src={resolvedPhotoURL} alt="" loading="lazy" referrerPolicy="no-referrer" /> : initial}</span>
@@ -39,15 +40,15 @@ export default function ProfileMenu({ email, displayName, photoURL, onSettings, 
           <span className="profile-menu-email">{email}</span>
         </div>
         <div className="profile-menu-divider" />
-        <button type="button" className="profile-menu-item" onClick={() => setProfileOpen(true)}>
+        <button type="button" className="profile-menu-item" onClick={() => { setMenuOpen(false); setProfileOpen(true); }}>
           <UserRound className="size-4" />
           <span>Profil &amp; riwayat login</span>
         </button>
-        <button type="button" className="profile-menu-item" onClick={onSettings}>
+        <button type="button" className="profile-menu-item" onClick={() => { setMenuOpen(false); onSettings(); }}>
           <Settings2 className="size-4" />
           <span>Settings</span>
         </button>
-        <button type="button" className="profile-menu-item danger" onClick={onLogout}>
+        <button type="button" className="profile-menu-item danger" onClick={() => { setMenuOpen(false); onLogout(); }}>
           <LogOut className="size-4" />
           <span>Logout</span>
         </button>

@@ -1,4 +1,5 @@
 /* Minimalist Secure Workspace — a centered identity record pairs calm account metadata with a readable security history. */
+import { useEffect, useRef } from "react";
 import { CalendarDays, Clock3, KeyRound, LogIn, LogOut, Mail, MonitorSmartphone, RefreshCw, Settings2, ShieldCheck, X } from "lucide-react";
 import type { User } from "firebase/auth";
 import type { AuditEvent } from "@/lib/audit";
@@ -29,8 +30,33 @@ function providerLabel(user: User) {
 export default function ProfileView({ user, displayName, photoURL, events, loading, error, onRefresh, onSettings, onClose }: ProfileViewProps) {
   const label = displayName.trim() || user.email || "Vaultmark user";
   const initial = label.charAt(0).toUpperCase() || "U";
+  const dialogRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    dialogRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
   return <div className="profile-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
-    <section className="profile-page" role="dialog" aria-modal="true" aria-labelledby="profile-page-title">
+    <section ref={dialogRef} className="profile-page" role="dialog" aria-modal="true" aria-labelledby="profile-page-title" tabIndex={-1}>
       <div className="profile-page-header">
         <div>
           <div className="eyebrow flex items-center gap-2"><ShieldCheck className="size-3 text-[#1FACFF]" />account record</div>
