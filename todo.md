@@ -314,3 +314,12 @@ Preview verification: `https://3000-i9164wvqb8j4tigmtms05-f21c7557.sg1.manus.com
 - [ ] Save a checkpoint after the complete layout pass.
 
 Layout verification: `pnpm check` and `pnpm build` pass. AuthScreen was reviewed at 1280×900 and 390×844; the mobile form remains readable with no horizontal overflow. The independent review returned “Style holds up — ship it.” Dashboard, Settings/profile, and modal responsiveness are covered by source-level breakpoint verification because they require an authenticated vault session to render.
+
+# Follow-up simplify AuthScreen
+
+- [x] Audit AuthScreen markup and current desktop/mobile spacing.
+- [x] Hide/remove the desktop security evidence panel and center the login task.
+- [x] Shorten login headline/supporting copy and reduce excess typography/spacing.
+- [x] Run TypeScript/build and verify desktop/mobile screenshots before saving a checkpoint.
+
+Simplification verification: the desktop AuthScreen is now a single centered column with the right security panel hidden. The heading and supporting copy use a smaller scale and tighter spacing; the 1280×900 and 390×844 screenshots show no horizontal overflow. `pnpm check` and `pnpm build` pass.
