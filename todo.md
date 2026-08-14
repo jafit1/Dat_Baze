@@ -125,7 +125,7 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 
 # Follow-up push latest changes to GitHub
 
-- [ ] Inspect local git status, remote repository, and branch before pushing.
-- [ ] Commit the latest authentication hardening, profile image persistence, and browser-session changes.
-- [ ] Push the commit to `https://github.com/jafit1/Dat_Baze` on the main branch.
-- [ ] Verify the remote commit and provide the repository/live testing URL to the user.
+- [x] Inspect local git status, remote repository, and branch before pushing.
+- [x] Commit the latest authentication hardening, profile image persistence, and browser-session changes.
+- [x] Push the commit to `https://github.com/jafit1/Dat_Baze` on the main branch.
+- [x] Verify the remote commit and provide the repository/live testing URL to the user.
