@@ -31,6 +31,12 @@ Before testing the login form, open **Firebase Console → Security → Authenti
 
 The client code calls `signInWithEmailAndPassword` and `createUserWithEmailAndPassword` only after Firebase is initialized. A failed Firebase configuration never unlocks the vault.
 
+## Cloud Firestore preflight
+
+Before the first login or registration, open **Firebase Console → Build → Firestore Database** for project `dat-baze` and create/enable the database if it does not exist. Also verify that **Cloud Firestore API** is enabled for the same Google Cloud project. If the API is disabled, Firebase Authentication can still create a session but reads of `users/{uid}/profile/settings` fail with `Failed to get document because the client is offline`. Vaultmark keeps the vault locked, times out the request after 12 seconds, and shows a retry screen instead of bypassing the policy.
+
+After enabling Firestore, publish the accompanying `firestore.rules`, reload `https://dat-baze.vercel.app`, and retry. The first successful session creates the user-owned `users/{uid}/profile/settings` document; no password, master key, or vault ciphertext is written to that document.
+
 ## Google Sign-In, profile, and audit log
 
 For Google Sign-In, enable **Google** in **Firebase Console → Authentication → Sign-in method** after completing the Google Auth Platform branding flow. The application still enforces the `maxluno47@gmail.com` allowlist after the popup returns, so a Google account outside the allowlist is signed out and cannot open the vault. Keep `dat-baze.vercel.app` and every preview hostname used for testing in Authorized domains.

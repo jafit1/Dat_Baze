@@ -215,3 +215,21 @@ Google provider verification: Firebase Authentication now lists both Email/Passw
 - [x] Record login and logout events in a user-scoped Firestore audit log without storing passwords or secrets.
 - [x] Add Firestore rules and safe retention/limit behavior for audit log reads and writes.
 - [x] Run TypeScript/build, responsive verification, and save a new checkpoint.
+
+# Follow-up registration stuck on security policy
+
+- [x] Audit the registration submit flow and the `users/{uid}/profile/settings` policy write.
+- [x] Identify whether Firestore Rules, Firebase configuration, or an unresolved promise causes the stuck loading state.
+- [x] Add safe timeout/error recovery without opening the vault before policy initialization succeeds.
+- [x] Run TypeScript/build and verify the registration failure and success paths.
+
+Verification: `pnpm check` and `pnpm build` pass. The live Firestore API remains disabled, so end-to-end account creation cannot complete until the Firebase project prerequisite is enabled; the UI now times out safely and provides `Coba lagi`/`Logout` without unlocking the vault.
+
+## Diagnosis notes
+
+- Live deployment `https://dat-baze.vercel.app` renders the Firebase Auth screen and the production Firebase configuration is present.
+- The reported toast is Firestore's `Failed to get document because the client is offline.` during the post-auth `users/{uid}/profile/settings` bootstrap.
+- `firestore.rules` allows the authenticated owner to read/write only the `settings` profile document, so the immediate failure is a connectivity/Firestore request timeout path rather than an intentional access bypass.
+- Direct read-only connectivity check against `firestore.googleapis.com` returns HTTP 403: Cloud Firestore API has not been used in project `dat-baze` or is disabled.
+- Google Cloud API page is reachable in the authenticated browser session, but its project selector currently reports no project selected; no cloud setting has been changed.
+- The Cloud Console project picker also fails to load its project list in this session, so no external Firebase/Google Cloud setting was changed automatically.
