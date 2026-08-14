@@ -323,3 +323,11 @@ Layout verification: `pnpm check` and `pnpm build` pass. AuthScreen was reviewed
 - [x] Run TypeScript/build and verify desktop/mobile screenshots before saving a checkpoint.
 
 Simplification verification: the desktop AuthScreen is now a single centered column with the right security panel hidden. The heading and supporting copy use a smaller scale and tighter spacing; the 1280×900 and 390×844 screenshots show no horizontal overflow. `pnpm check` and `pnpm build` pass.
+
+# Follow-up center desktop login form
+
+- [x] Audit current desktop alignment and vertical rhythm around the AuthScreen form.
+- [x] Center the email/password block and balance the surrounding brand, copy, actions, and footer.
+- [x] Verify desktop and mobile screenshots, then save a checkpoint.
+
+Centering verification: desktop AuthScreen now uses a centered 460px form block with centered brand/headline/footer and left-aligned input contents for readability. The 1280×900 and 390×844 screenshots show balanced composition and no horizontal overflow; `pnpm check` and `pnpm build` pass.
