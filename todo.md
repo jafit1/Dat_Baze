@@ -114,3 +114,11 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [x] Add client-side profile image upload with crop and max-size resize before Firestore persistence.
 - [x] Center the Settings layout and keep the profile editor responsive and accessible.
 - [x] Run TypeScript/build and visual verification, then save a new checkpoint.
+
+# Follow-up auth hardening, profile image persistence, and browser session
+
+- [x] Audit all login/demo fallbacks and verify wrong passwords cannot enter the vault.
+- [x] Remove or gate any preview/demo path from the production login surface.
+- [x] Fix profile image save and verify Firestore/Auth metadata error handling.
+- [x] Add an accessible remember-me option using Firebase browser persistence without storing raw passwords.
+- [x] Run security-focused checks, TypeScript/build, responsive verification, and save a new checkpoint.

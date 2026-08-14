@@ -54,18 +54,23 @@ export function useProfile(user: User | null) {
   const saveProfile = async (nextDisplayName: string, nextPhotoURL: string) => {
     const currentUser = sessionUser ?? user ?? auth?.currentUser ?? null;
     if (!currentUser) throw new Error("Sesi autentikasi belum siap. Tunggu sampai sesi Firebase selesai dimuat, lalu coba lagi.");
-    await updateProfile(currentUser, { displayName: nextDisplayName || null, photoURL: nextPhotoURL || null });
-    if (db) {
-      await setDoc(doc(db, `users/${currentUser.uid}/profile/${PROFILE_DOCUMENT_ID}`), {
-        email: currentUser.email,
-        displayName: nextDisplayName,
-        photoURL: nextPhotoURL,
-        updatedAt: Date.now(),
-      }, { merge: true });
-    }
+    if (!db) throw new Error("Firestore belum terkonfigurasi. Foto tidak dapat disimpan dengan aman.");
+    const normalizedPhotoURL = nextPhotoURL.trim();
+    if (normalizedPhotoURL.startsWith("data:image/") && normalizedPhotoURL.length > 140_000) throw new Error("Foto hasil crop terlalu besar. Pilih gambar lain atau gunakan zoom yang lebih rendah.");
+    const isLocalUpload = normalizedPhotoURL.startsWith("data:image/");
+    await setDoc(doc(db, `users/${currentUser.uid}/profile/${PROFILE_DOCUMENT_ID}`), {
+      email: currentUser.email,
+      displayName: nextDisplayName,
+      photoURL: normalizedPhotoURL,
+      updatedAt: Date.now(),
+    }, { merge: true });
+    await updateProfile(currentUser, {
+      displayName: nextDisplayName || null,
+      photoURL: isLocalUpload ? currentUser.photoURL ?? null : normalizedPhotoURL || null,
+    });
     setDisplayName(nextDisplayName);
-    setPhotoURL(nextPhotoURL);
-    window.dispatchEvent(new CustomEvent("vaultmark-profile-change", { detail: { displayName: nextDisplayName, photoURL: nextPhotoURL } }));
+    setPhotoURL(normalizedPhotoURL);
+    window.dispatchEvent(new CustomEvent("vaultmark-profile-change", { detail: { displayName: nextDisplayName, photoURL: normalizedPhotoURL } }));
     toast.success("Profil berhasil diperbarui", { description: "Nama tampilan dan foto profil tersimpan." });
   };
 

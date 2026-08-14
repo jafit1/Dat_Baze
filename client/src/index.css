@@ -263,13 +263,22 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .profile-error { margin-top: 10px; color: #c84f5a !important; font-size: 11px !important; }
 .auth-forgot-link { width: fit-content; margin: -2px 0 0 auto; color: #0d80c9; font-size: 11px; font-weight: 700; }
 .auth-forgot-link:hover, .auth-forgot-link:focus-visible { color: #08679f; text-decoration: underline; text-underline-offset: 3px; outline: none; }
+.remember-login { display: flex; align-items: flex-start; gap: 9px; color: #536474; font-size: 11px; line-height: 1.45; cursor: pointer; }
+.remember-login input { margin-top: 2px; height: 14px; width: 14px; accent-color: #1FACFF; }
+.remember-login span { display: grid; gap: 2px; }
+.remember-login strong { color: #536474; font-size: 11px; font-weight: 750; }
+.remember-login small { color: #8a99a8; font-size: 10px; }
+.remember-login:focus-within input { outline: 2px solid rgba(31,172,255,.35); outline-offset: 2px; }
+.remember-login.muted { opacity: .62; }
 .dark .profile-preview { background: #123c55; color: #77d1ff; }
 .dark .profile-preview-copy strong, .dark .profile-field > span { color: #e7f3f9; }
 .dark .profile-preview-copy span, .dark .profile-help { color: #9eb5c4; }
 .dark .auth-forgot-link { color: #77d1ff; }
 .dark .auth-forgot-link:hover, .dark .auth-forgot-link:focus-visible { color: #b6e8ff; }
+.dark .remember-login strong { color: #d4e5ee; }
+.dark .remember-login small { color: #9eb5c4; }
 @media (max-width: 640px) { .profile-setting-card { gap: 11px; padding: 16px; } .profile-preview-row { align-items: flex-start; } }
-@media (prefers-reduced-motion: reduce) { .profile-preview, .auth-forgot-link { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .profile-preview, .auth-forgot-link, .remember-login { transition: none !important; } }
 
 /* Profile cropper — square framing keeps stored data predictable and the interaction touch-friendly. */
 .profile-crop-dialog { max-width: 430px; padding: 20px; }
