@@ -40,7 +40,7 @@ export default function SettingsView({ accounts, displayName, photoURL, lockMinu
 
   return (
     <section className="settings-page">
-      <div className="max-w-3xl">
+      <div className="settings-content max-w-4xl">
         <div className="settings-grid">
           <ProfileEditor displayName={displayName} photoURL={photoURL} onSave={onProfileUpdate} />
           <div className="setting-card">

@@ -106,3 +106,11 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 - [x] Add editable display name and secure public-photo URL persistence in Settings.
 - [x] Add accessible Forgot Password flow with Firebase reset email and allowlist validation.
 - [x] Run TypeScript/build and responsive auth/settings verification, then save a new checkpoint.
+
+# Follow-up username session, profile upload, and centered Settings
+
+- [x] Audit why profile save reports that the authentication session is not ready.
+- [x] Fix username/display-name persistence and session synchronization.
+- [x] Add client-side profile image upload with crop and max-size resize before Firestore persistence.
+- [x] Center the Settings layout and keep the profile editor responsive and accessible.
+- [x] Run TypeScript/build and visual verification, then save a new checkpoint.
