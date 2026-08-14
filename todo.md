@@ -132,7 +132,9 @@ Verification note: auth entry screen remains readable and responsive at desktop 
 
 # Follow-up live Firebase configuration
 
-- [ ] Audit Firebase environment variable names, Vite exposure, and live deployment configuration.
-- [ ] Restore Firebase initialization on the live build without bypassing server-side password validation.
-- [ ] Verify the live auth gate, production build, and Firebase configuration error handling.
-- [ ] Document any required deployment environment variables and provide the user with test steps.
+- [x] Audit Firebase environment variable names, Vite exposure, and live deployment configuration.
+- [x] Restore Firebase initialization on the live build without bypassing server-side password validation.
+- [x] Verify the live auth gate, production build, and Firebase configuration error handling.
+- [x] Document any required deployment environment variables and provide the user with test steps.
+
+Verification note: after production commit `1d17219`, the live page no longer shows “Login dinonaktifkan” or “Firebase belum terkonfigurasi”; it loads the Firebase session state and presents the login controls.
