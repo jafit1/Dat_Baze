@@ -364,3 +364,9 @@ Simplification verification: the desktop AuthScreen is now a single centered col
 - [x] Verify desktop and mobile screenshots, then save a checkpoint.
 
 Centering verification: desktop AuthScreen now uses a centered 460px form block with centered brand/headline/footer and left-aligned input contents for readability. The 1280×900 and 390×844 screenshots show balanced composition and no horizontal overflow; `pnpm check` and `pnpm build` pass.
+
+# Active deployment synchronization
+
+- [ ] Confirm the latest local commit and GitHub `main` branch are identical.
+- [ ] Push any remaining committed work to `jafit1/Dat_Baze`.
+- [ ] Verify the Manus auto-published version and the Vercel deployment source reflect the latest commit.
