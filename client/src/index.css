@@ -323,10 +323,11 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 @media (prefers-reduced-motion: reduce) { .auth-loading-icon { animation: none !important; } .auth-google-button { transition: none !important; } .auth-google-button:active { transform: none; } }
 
 /* Minimalist Secure Workspace — profile history is a centered record surface: quiet neutrals, precise blue signals, and no decorative noise. */
-.profile-overlay { position: fixed; z-index: 120; inset: 0; display: flex; align-items: center; justify-content: center; overflow: auto; overscroll-behavior: contain; padding: clamp(14px, 4vh, 36px) clamp(12px, 3vw, 28px); background: rgba(15, 29, 41, .3); backdrop-filter: blur(8px); }
-.profile-page { position: relative; isolation: isolate; box-sizing: border-box; width: min(100%, 820px); max-height: min(820px, calc(100dvh - 28px)); margin: auto; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border: 1px solid rgba(207, 222, 231, .82); border-radius: 22px; background: #fff; box-shadow: 0 24px 70px rgba(30, 56, 78, .18); outline: none; }
+.profile-overlay { position: fixed; z-index: 120; inset: 0; display: grid; place-items: center; overflow: hidden; overscroll-behavior: contain; padding: clamp(14px, 4vh, 36px) clamp(12px, 3vw, 28px); background: rgba(15, 29, 41, .3); backdrop-filter: blur(8px); }
+.profile-page { position: relative; isolation: isolate; box-sizing: border-box; display: flex; width: min(100%, 820px); height: min(820px, calc(100dvh - 28px)); min-height: 0; flex-direction: column; overflow: hidden; border: 1px solid rgba(207, 222, 231, .82); border-radius: 22px; background: #fff; box-shadow: 0 24px 70px rgba(30, 56, 78, .18); outline: none; }
 .profile-page:focus-visible { outline: 2px solid rgba(31,172,255,.65); outline-offset: 4px; }
 .profile-page-header { position: sticky; top: 0; z-index: 4; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 28px 30px 22px; border-bottom: 1px solid #edf2f5; background: rgba(255,255,255,.97); backdrop-filter: blur(14px); }
+.profile-page-body { min-height: 0; flex: 1 1 auto; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
 .profile-page-header .icon-button { flex: 0 0 auto; }
 .profile-page-header h1 { color: #243746; }
 .profile-page-header p { color: #738494; }
@@ -381,7 +382,7 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .profile-fact, .dark .audit-event, .dark .audit-card-header { border-color: #203849; }
 .dark .profile-fact strong, .dark .audit-event-copy strong { color: #dcecf4; }
 .dark .profile-fact small, .dark .audit-event-copy small, .dark .audit-event-copy em, .dark .audit-empty, .dark .audit-loading { color: #9eb5c4; }
-@media (max-width: 700px) { .profile-overlay { align-items: flex-start; padding: 10px; } .profile-page { max-height: calc(100dvh - 20px); border-radius: 18px; } .profile-page-header { padding: 18px 16px 16px; } .profile-page-header h1 { font-size: 1.45rem; } .profile-page-header p { max-width: 34ch; font-size: 11px; line-height: 1.5; } .profile-record-grid { grid-template-columns: 1fr; padding: 12px 16px; } .profile-identity-card { grid-template-columns: auto minmax(0, 1fr); padding: 16px; } .audit-card { margin: 0 16px 16px; padding: 16px; } .audit-card-header { align-items: center; } }
+@media (max-width: 700px) { .profile-overlay { padding: 10px; } .profile-page { height: calc(100dvh - 20px); border-radius: 18px; } .profile-page-header { padding: 18px 16px 16px; } .profile-page-header h1 { font-size: 1.45rem; } .profile-page-header p { max-width: 34ch; font-size: 11px; line-height: 1.5; } .profile-record-grid { grid-template-columns: 1fr; padding: 12px 16px; } .profile-identity-card { grid-template-columns: auto minmax(0, 1fr); padding: 16px; } .audit-card { margin: 0 16px 16px; padding: 16px; } .audit-card-header { align-items: center; } }
 @media (prefers-reduced-motion: reduce) { .profile-overlay, .profile-edit-button, .audit-event-icon, .audit-loading-dot { animation: none !important; transition: none !important; } .profile-edit-button:active { transform: none; } }
 
 /* Minimalist Secure Workspace — Add Account prioritizes Email while retaining service internally via the email fallback. */

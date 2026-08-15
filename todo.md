@@ -372,3 +372,10 @@ Centering verification: desktop AuthScreen now uses a centered 460px form block 
 - [x] Verify the Manus auto-published version and the Vercel deployment source reflect the latest commit.
 
 Deployment verification: GitHub `main` points to `7b53762`. The authenticated Vercel dashboard shows project `dat-baze` at `dat-baze.vercel.app` with source `jafit1/Dat_Baze`, commit `chore: track deployment synchronization`, timestamp approximately two minutes after the push, and a completed status marker. Manus has auto-published the current checkpoint at `accvault-lgt7phvq.manus.space`.
+
+# Active ProfileView viewport recovery
+
+- [x] Audit the rendered ProfileView DOM, parent stacking contexts, modal height constraints, and active CSS selectors.
+- [x] Ensure the ProfileView dialog is bounded by the viewport with an explicit flex column, min-height guards, and a single internal scroll region.
+- [ ] Verify desktop and mobile presentation with an authenticated dashboard session, including close, Escape, outside-click, and focus behavior.
+- [ ] Run TypeScript/build, save a checkpoint, and synchronize the repair to GitHub.
