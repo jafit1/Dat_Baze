@@ -379,3 +379,13 @@ Deployment verification: GitHub `main` points to `7b53762`. The authenticated Ve
 - [x] Ensure the ProfileView dialog is bounded by the viewport with an explicit flex column, min-height guards, and a single internal scroll region.
 - [ ] Verify desktop and mobile presentation with an authenticated dashboard session, including close, Escape, outside-click, and focus behavior.
 - [ ] Run TypeScript/build, save a checkpoint, and synchronize the repair to GitHub.
+
+Runtime verification note: the existing browser session remains authenticated to Vaultmark but its vault is locked, so the profile menu cannot be opened without the user's Master Password. The current Vercel project card still displayed the preceding source commit during the check immediately after the new GitHub push; the manual validation should occur after Vercel completes its automatic deployment.
+
+Deployment verification: Vercel production is now `Ready` and uses source `main` commit `e24c169` (`fix: contain and scroll profile history modal`).
+
+# Active ProfileView polish
+
+- [ ] Reduce the desktop and mobile ProfileView dimensions, spacing, and card density to a more compact proportional composition.
+- [ ] Hide the visible internal scrollbar cross-browser while preserving keyboard, wheel, touch, and programmatic scrolling.
+- [ ] Run TypeScript/build, verify responsive rendering, and publish the visual refinement.
