@@ -435,3 +435,13 @@ Isolation verification: the repair changes only `client/src/index.css` toolbar/t
 - [ ] Publish only after direct dashboard verification confirms the screenshot target is met.
 
 Static verification: `Home.tsx` now places the original search markup in `.topbar-search`; its state, debounce, result count, and input handler are unchanged. The original Card/List, sorting popover/direction, and Add Account markup are preserved in `.vault-actions`. Account rows, email values, tags, and vault logic are untouched. TypeScript and production builds succeed; desktop/mobile unauthenticated routes are stable.
+
+# Active search feedback and category filter
+
+- [x] Audit existing search debounce state, tag/category data, sort controls, and mobile toolbar breakpoints.
+- [x] Add a brief accessible loading state while debounced search results are being resolved.
+- [x] Add a category filter popover adjacent to Sort while preserving existing tag filters and result counts.
+- [x] Verify topbar and all toolbar controls at desktop, tablet, and mobile widths without horizontal overflow.
+- [x] Run TypeScript/build, push to GitHub, and publish the feature update.
+
+Implementation note: category filtering reuses the existing tag taxonomy, so it does not create a second data model. During the 180ms debounced search interval, the account list uses the existing lightweight skeleton with an accessible live result count. Desktop and 390px mobile shell captures remain stable; action row wraps into two compact rows on small screens instead of overflowing.

@@ -146,6 +146,33 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .tag-count.active { background: #0d2f43; color: #77d1ff; }
 @media (max-width: 767px) { .sort-trigger { min-width: 0; width: min(100%, 218px); } .sort-popover-content { width: min(248px, calc(100vw - 24px)); } }
 @media (prefers-reduced-motion: reduce) { .sort-trigger, .sort-trigger-icon, .sort-option { transition: none !important; } .sort-trigger.open .sort-trigger-icon { transform: none; } }
+
+/* Minimalist Secure Workspace — category filtering stays next to Sort as one compact query toolset. */
+.category-trigger { display: inline-flex; min-width: 136px; min-height: 40px; align-items: center; gap: 7px; border: 1px solid #dfe9f0; border-radius: 12px; background: #fff; padding: 5px 9px 5px 10px; color: #627786; font-size: 12px; font-weight: 700; text-align: left; box-shadow: 0 5px 18px rgba(42,70,96,.04); transition: border-color 160ms ease, box-shadow 160ms ease, background-color 220ms ease, color 220ms ease, transform 160ms cubic-bezier(.23,1,.32,1); }
+.category-trigger:hover, .category-trigger:focus-visible, .category-trigger.open { border-color: #8ddaff; box-shadow: 0 0 0 3px rgba(31,172,255,.12); color: #0d80c9; outline: none; }
+.category-trigger-label { color: #96a5b2; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.category-trigger-value { min-width: 0; flex: 1; overflow: hidden; color: #344454; font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.category-trigger-icon { flex: none; color: #7d91a0; transition: transform 180ms cubic-bezier(.23,1,.32,1); }
+.category-trigger.open .category-trigger-icon { transform: rotate(180deg); }
+.category-popover-content { width: min(246px, calc(100vw - 32px)); border-color: #e5eef4; border-radius: 16px; background: #fff; padding: 8px; box-shadow: 0 18px 45px rgba(36,67,92,.14); }
+.category-menu { display: grid; gap: 2px; }
+.category-option { display: flex; width: 100%; min-width: 0; align-items: center; justify-content: space-between; gap: 12px; border-radius: 10px; padding: 10px 9px; color: #566876; font-size: 12px; font-weight: 650; text-align: left; transition: background-color 140ms ease, color 140ms ease, transform 140ms cubic-bezier(.23,1,.32,1); }
+.category-option:hover, .category-option:focus-visible { background: #f4faff; color: #0d80c9; outline: none; }
+.category-option.selected { background: #eef9ff; color: #0d80c9; font-weight: 750; }
+.category-option-count { display: inline-flex; min-width: 20px; height: 18px; flex: none; align-items: center; justify-content: center; border-radius: 999px; background: #f1f5f8; padding: 0 6px; color: #7c8e9b; font-size: 10px; font-weight: 800; }
+.category-option.selected .category-option-count { background: #fff; color: #0d80c9; }
+.search-wrap.searching { border-color: #8ddaff; background: linear-gradient(100deg, #fff 0%, #f0faff 48%, #fff 100%); }
+.search-wrap.searching .search-result-count { color: #0d80c9; animation: search-count-pulse .66s cubic-bezier(.23,1,.32,1) infinite alternate; }
+@keyframes search-count-pulse { from { opacity: .56; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+.dark .category-trigger, .dark .category-popover-content { border-color: #29485b; background: #102332; }
+.dark .category-trigger-label { color: #829aa9; }
+.dark .category-trigger-value, .dark .category-option { color: #dbe8f2; }
+.dark .category-option:hover, .dark .category-option:focus-visible, .dark .category-option.selected { background: #123c55; color: #77d1ff; }
+.dark .category-option-count { background: #183444; color: #9eb5c4; }
+.dark .category-option.selected .category-option-count { background: #0d2f43; color: #77d1ff; }
+@media (max-width: 999px) { .vault-actions .list-controls { flex: 1 1 360px; } }
+@media (max-width: 640px) { .vault-summary { align-items: stretch; } .vault-actions { gap: 8px; } .vault-actions .view-toggle { flex: 0 0 auto; } .vault-actions .list-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 32px; flex: 1 1 100%; width: 100%; gap: 7px; } .vault-actions .sort-trigger, .vault-actions .category-trigger { width: 100%; min-width: 0; } .vault-actions .sort-direction { align-self: stretch; width: 32px; } .vault-actions .add-button { flex: 1 1 100%; justify-content: center; } .topbar-search .search-wrap { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .category-trigger, .category-trigger-icon, .category-option, .search-wrap.searching .search-result-count { animation: none !important; transition: none !important; } .category-trigger.open .category-trigger-icon { transform: none; } }
 /* Minimalist Secure Workspace — loading reveals structure first, then content, while search feedback stays quiet and immediate. */
 .loading-shell { min-height: 100vh; display: grid; place-items: center; background: #fbfcfe; padding: 28px 20px; }
 .loading-panel { width: min(100%, 760px); border: 1px solid #edf1f5; border-radius: 24px; background: #fff; padding: 24px; box-shadow: 0 20px 50px rgba(42,70,96,.07); }
