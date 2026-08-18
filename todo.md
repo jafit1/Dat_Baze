@@ -425,3 +425,13 @@ Deployment status: commit `62a2c92` was pushed to GitHub `main`. At the immediat
 - [x] Run TypeScript/build and publish the isolated topbar correction.
 
 Isolation verification: the repair changes only `client/src/index.css` toolbar/topbar rules; `Home.tsx` account row markup, email copy actions, card/list styles, and vault data flow are unchanged. TypeScript, production build, and whitespace checks pass.
+
+# Active responsive topbar reconstruction
+
+- [x] Remove absolute positioning from dashboard search and action controls that causes visual drift or unreachable controls.
+- [x] Move the search control into the topbar DOM beside the project identity, preserving search debounce and clear behavior.
+- [x] Keep Sort, sort direction, Card/List, Settings, and Add Account as a responsive action row with all existing handlers intact.
+- [ ] Validate desktop, tablet, and mobile layout without changing account rows, email data, tags, or vault operations.
+- [ ] Publish only after direct dashboard verification confirms the screenshot target is met.
+
+Static verification: `Home.tsx` now places the original search markup in `.topbar-search`; its state, debounce, result count, and input handler are unchanged. The original Card/List, sorting popover/direction, and Add Account markup are preserved in `.vault-actions`. Account rows, email values, tags, and vault logic are untouched. TypeScript and production builds succeed; desktop/mobile unauthenticated routes are stable.
