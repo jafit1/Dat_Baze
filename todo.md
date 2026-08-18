@@ -445,3 +445,13 @@ Static verification: `Home.tsx` now places the original search markup in `.topba
 - [x] Run TypeScript/build, push to GitHub, and publish the feature update.
 
 Implementation note: category filtering reuses the existing tag taxonomy, so it does not create a second data model. During the 180ms debounced search interval, the account list uses the existing lightweight skeleton with an accessible live result count. Desktop and 390px mobile shell captures remain stable; action row wraps into two compact rows on small screens instead of overflowing.
+
+# Active category persistence and unified loading
+
+- [x] Audit category filter state, storage conventions, and loading states across vault data, search, sorting, filtering, settings, and account mutations.
+- [x] Persist the selected category safely in browser local storage and restore it only if it remains available.
+- [x] Add a reusable loading treatment for asynchronous UI states, with accessible labels and reduced-motion support.
+- [x] Integrate the loading treatment into primary data fetches, filtering/sorting, modal saves, import/export, and view transitions without blocking unrelated controls.
+- [x] Run TypeScript/build, verify desktop/mobile behavior, push to GitHub, and publish the update.
+
+Validation note: `pnpm check` and the production build pass. Desktop 1280px and mobile 390px shell captures remain stable after the loading styles. Direct interactive loading states require an unlocked vault session, but all handlers retain their original operational paths and now call the non-blocking activity helper.
