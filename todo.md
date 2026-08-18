@@ -389,3 +389,12 @@ Deployment verification: Vercel production is now `Ready` and uses source `main`
 - [ ] Reduce the desktop and mobile ProfileView dimensions, spacing, and card density to a more compact proportional composition.
 - [ ] Hide the visible internal scrollbar cross-browser while preserving keyboard, wheel, touch, and programmatic scrolling.
 - [ ] Run TypeScript/build, verify responsive rendering, and publish the visual refinement.
+
+# Active dashboard toolbar alignment
+
+- [x] Audit the dashboard toolbar markup and CSS selectors for search, sort, settings, view mode, and Add Account controls.
+- [x] Set a proportionate search width and align sort, settings, card/list toggle, and Add Account within one desktop action row.
+- [x] Define mobile wrapping or overflow behavior that preserves reachable controls without horizontal scrolling.
+- [x] Run TypeScript/build, verify desktop/mobile rendering, and publish the toolbar refinement.
+
+Toolbar verification note: `pnpm check` and the production build passed. Screenshots confirm desktop and mobile auth routes remain stable; the desktop vault action rail should be checked once the existing authenticated vault session is opened again.

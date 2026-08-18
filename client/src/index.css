@@ -426,6 +426,22 @@ html, body, #root { min-width: 0; overflow-x: hidden; }
 .account-row:hover { box-shadow: 0 16px 34px rgba(42,70,96,.08); }
 .account-list-list .account-row { border-radius: 14px; }
 
+/* Minimalist Secure Workspace — desktop action rail keeps search quiet and groups view, sort, and creation controls on one clear line. */
+@media (min-width: 1000px) {
+  .app-main:has(.vault-summary) { display: grid; grid-template-columns: minmax(220px, 1fr) auto auto auto; grid-template-rows: auto auto auto auto minmax(0, 1fr); align-content: start; background: #fbfdff; }
+  .topbar { grid-column: 1 / -1; grid-row: 1; }
+  .vault-summary, .toolbar, .accounts-section, .accounts-section > .mb-4 { display: contents; }
+  .vault-summary > div { grid-column: 1; grid-row: 2; min-width: 0; padding: 28px 0 20px clamp(16px, 4vw, 44px); }
+  .vault-summary .add-button { grid-column: 4; grid-row: 2; align-self: center; justify-self: end; margin-right: clamp(16px, 4vw, 44px); }
+  .toolbar .view-toggle { grid-column: 2; grid-row: 2; justify-self: end; margin-right: 10px; }
+  .accounts-section .list-controls { grid-column: 3; grid-row: 2; align-self: center; justify-self: end; margin-right: 10px; }
+  .toolbar .search-wrap { grid-column: 1; grid-row: 3; width: min(100%, 360px); min-width: 0; margin-left: clamp(16px, 4vw, 44px); }
+  .toolbar .tag-scroll { grid-column: 2 / -1; grid-row: 3; max-width: none; margin-right: clamp(16px, 4vw, 44px); }
+  .accounts-section > .mb-4 > div:first-child { grid-column: 1 / -1; grid-row: 4; padding: 26px clamp(16px, 4vw, 44px) 14px; }
+  .accounts-section > .account-list, .accounts-section > .empty-state { grid-column: 1 / -1; grid-row: 5; margin: 0 clamp(16px, 4vw, 44px) 72px; }
+  .accounts-section > .empty-state { max-width: none; }
+}
+
 /* Settings/profile: two-column desktop rhythm collapses into readable single-column cards on mobile. */
 .settings-page { min-width: 0; padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 44px) 72px; background: #fbfdff; }
 .settings-content { max-width: 900px; }
