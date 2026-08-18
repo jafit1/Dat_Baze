@@ -455,3 +455,11 @@ Implementation note: category filtering reuses the existing tag taxonomy, so it 
 - [x] Run TypeScript/build, verify desktop/mobile behavior, push to GitHub, and publish the update.
 
 Validation note: `pnpm check` and the production build pass. Desktop 1280px and mobile 390px shell captures remain stable after the loading styles. Direct interactive loading states require an unlocked vault session, but all handlers retain their original operational paths and now call the non-blocking activity helper.
+
+# Active success toast feedback
+- [x] Audit existing toast configuration, save handlers, and import/export success paths.
+- [x] Display concise corner toasts after successful account saves, file imports, and JSON/CSV exports.
+- [x] Respect the user-configured toast duration and retain useful error feedback for failed actions.
+- [x] Run TypeScript/build, verify responsive placement, and publish the update.
+
+Validation note: the Sonner viewport is explicitly fixed at `bottom-right`; save, import validation, JSON export, and CSV export use the configured toast duration. `pnpm check` and `pnpm build` pass, while desktop 1280px and mobile 390px captures remain responsive.
