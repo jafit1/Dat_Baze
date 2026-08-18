@@ -442,6 +442,21 @@ html, body, #root { min-width: 0; overflow-x: hidden; }
   .accounts-section > .empty-state { max-width: none; }
 }
 
+/* Minimalist Secure Workspace — toolbar motion is short, tactile, and reserved for deliberate controls. */
+@media (prefers-reduced-motion: no-preference) {
+  .toolbar .search-wrap, .toolbar .view-toggle, .toolbar .tag-filter, .accounts-section .list-controls, .vault-summary .add-button, .topbar .icon-button { transition: transform 160ms cubic-bezier(.23,1,.32,1), border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, color 160ms ease; }
+  .toolbar .search-wrap:hover { border-color: #c2e9fb; box-shadow: 0 8px 20px rgba(31,172,255,.07); transform: translateY(-1px); }
+  .toolbar .search-wrap:focus-within { border-color: #75cfff; box-shadow: 0 0 0 3px rgba(31,172,255,.14), 0 8px 20px rgba(31,172,255,.07); }
+  .toolbar .tag-filter:hover { background: #f0faff; color: #0d80c9; transform: translateY(-1px); }
+  .toolbar .view-toggle:hover { background: #eaf6fc; box-shadow: 0 5px 14px rgba(42,70,96,.06); }
+  .toolbar .view-toggle button:not(.active):hover { background: rgba(255,255,255,.72); color: #3a586b; }
+  .accounts-section .list-controls:hover { transform: translateY(-1px); }
+  .sort-trigger:hover, .sort-trigger:focus-visible, .sort-trigger.open { transform: translateY(-1px); }
+  .sort-direction:hover { color: #087ec2; transform: translateY(-1px); }
+  .vault-summary .add-button:hover { box-shadow: 0 12px 24px rgba(31,172,255,.25); transform: translateY(-1px); }
+  .topbar .icon-button:hover { box-shadow: 0 5px 14px rgba(42,70,96,.08); transform: translateY(-1px); }
+}
+
 /* Settings/profile: two-column desktop rhythm collapses into readable single-column cards on mobile. */
 .settings-page { min-width: 0; padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 44px) 72px; background: #fbfdff; }
 .settings-content { max-width: 900px; }
@@ -535,3 +550,30 @@ html, body, #root { min-width: 0; overflow-x: hidden; }
 }
 
 .dark .auth-shell { background: #0b1822; }
+
+/* Minimalist Secure Workspace — the auth screen treats the lockup and evidence card as one precise Vaultmark signature. */
+.auth-card::before { display: none; }
+.auth-card > .brand-lockup { position: relative; padding-left: 14px; }
+.auth-card > .brand-lockup::before { position: absolute; top: -8px; bottom: -8px; left: 0; width: 3px; border-radius: 999px; background: #1facff; box-shadow: 0 0 0 5px rgba(31,172,255,.07); content: ""; }
+.auth-card .brand-mark { width: 42px; height: 42px; border-radius: 14px; box-shadow: 0 10px 23px rgba(31,172,255,.2); }
+.auth-card .brand-wordmark { font-size: 17px; font-weight: 700; letter-spacing: -.045em; }
+.auth-card .brand-subline { font-size: 0; letter-spacing: 0; }
+.auth-card .brand-subline::after { color: #8797a6; content: "ruang akses pribadi"; font-size: 9px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.auth-card .eyebrow { color: transparent; font-size: 0; letter-spacing: 0; }
+.auth-card .eyebrow::after { color: #75899a; content: "AKSES TERVERIFIKASI"; font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+.auth-card .remember-login strong { color: #35485a; font-size: 12px; font-weight: 750; }
+.auth-card .remember-login small { color: #7d8e9d; }
+.auth-card .auth-forgot-link { color: #587184; }
+.auth-card .auth-forgot-link:hover, .auth-card .auth-forgot-link:focus-visible { color: #0d80c9; }
+.auth-card > .mt-8.space-y-3 > button:last-child { color: #61788a; }
+.auth-card > .mt-8.space-y-3 > button:last-child:hover, .auth-card > .mt-8.space-y-3 > button:last-child:focus-visible { color: #0d80c9; }
+.auth-card > .mt-12.flex { min-height: 54px; margin-top: 30px; align-items: flex-start; gap: 10px; border: 1px solid #dbeef8; border-radius: 14px; background: #f8fcff; padding: 11px 13px; color: transparent; box-shadow: 0 8px 22px rgba(43,94,123,.045); }
+.auth-card > .mt-12.flex > svg { flex: 0 0 auto; margin-top: 1px; }
+.auth-card > .mt-12.flex::after { max-width: 34ch; color: #587184; content: "Enkripsi aktif · Kunci master tetap berada di browser Anda"; font-size: 11px; font-weight: 650; line-height: 1.45; }
+.dark .auth-card > .brand-lockup::before { box-shadow: 0 0 0 5px rgba(31,172,255,.12); }
+.dark .auth-card .brand-subline::after, .dark .auth-card .eyebrow::after { color: #98afbe; }
+.dark .auth-card .remember-login strong { color: #d6e5ed; }
+.dark .auth-card .remember-login small, .dark .auth-card .auth-forgot-link, .dark .auth-card > .mt-8.space-y-3 > button:last-child { color: #9bb0be; }
+.dark .auth-card > .mt-12.flex { border-color: #29485b; background: #102332; box-shadow: none; }
+.dark .auth-card > .mt-12.flex::after { color: #b9cbd6; }
+@media (max-width: 560px) { .auth-card .brand-mark { width: 38px; height: 38px; border-radius: 13px; } .auth-card > .mt-12.flex { margin-top: 26px; padding: 10px 12px; } }

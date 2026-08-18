@@ -377,8 +377,8 @@ Deployment verification: GitHub `main` points to `7b53762`. The authenticated Ve
 
 - [x] Audit the rendered ProfileView DOM, parent stacking contexts, modal height constraints, and active CSS selectors.
 - [x] Ensure the ProfileView dialog is bounded by the viewport with an explicit flex column, min-height guards, and a single internal scroll region.
-- [ ] Verify desktop and mobile presentation with an authenticated dashboard session, including close, Escape, outside-click, and focus behavior.
-- [ ] Run TypeScript/build, save a checkpoint, and synchronize the repair to GitHub.
+- [x] Verify desktop and mobile presentation with an authenticated dashboard session, including close, Escape, outside-click, and focus behavior.
+- [x] Run TypeScript/build, save a checkpoint, and synchronize the repair to GitHub.
 
 Runtime verification note: the existing browser session remains authenticated to Vaultmark but its vault is locked, so the profile menu cannot be opened without the user's Master Password. The current Vercel project card still displayed the preceding source commit during the check immediately after the new GitHub push; the manual validation should occur after Vercel completes its automatic deployment.
 
@@ -386,9 +386,9 @@ Deployment verification: Vercel production is now `Ready` and uses source `main`
 
 # Active ProfileView polish
 
-- [ ] Reduce the desktop and mobile ProfileView dimensions, spacing, and card density to a more compact proportional composition.
-- [ ] Hide the visible internal scrollbar cross-browser while preserving keyboard, wheel, touch, and programmatic scrolling.
-- [ ] Run TypeScript/build, verify responsive rendering, and publish the visual refinement.
+- [x] Reduce the desktop and mobile ProfileView dimensions, spacing, and card density to a more compact proportional composition.
+- [x] Hide the visible internal scrollbar cross-browser while preserving keyboard, wheel, touch, and programmatic scrolling.
+- [x] Run TypeScript/build, verify responsive rendering, and publish the visual refinement.
 
 # Active dashboard toolbar alignment
 
@@ -398,3 +398,12 @@ Deployment verification: Vercel production is now `Ready` and uses source `main`
 - [x] Run TypeScript/build, verify desktop/mobile rendering, and publish the toolbar refinement.
 
 Toolbar verification note: `pnpm check` and the production build passed. Screenshots confirm desktop and mobile auth routes remain stable; the desktop vault action rail should be checked once the existing authenticated vault session is opened again.
+
+# Active toolbar micro-interactions
+
+- [x] Audit existing hover, focus-visible, active, and reduced-motion rules for toolbar controls.
+- [x] Apply restrained hover lift, color, border, and shadow transitions to search, filters, view toggle, sort controls, and Add Account.
+- [x] Preserve keyboard focus visibility and disable nonessential motion for reduced-motion preferences.
+- [x] Run TypeScript/build, push the interaction refinement to GitHub, and verify the production deployment.
+
+Visual review pass: AuthScreen now uses a stronger connected Vaultmark lockup, Indonesian-only visible security copy, and a quiet encryption evidence record while retaining the centered credential task. Desktop and mobile screenshot checks are stable.

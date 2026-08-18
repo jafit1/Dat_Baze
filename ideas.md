@@ -79,3 +79,7 @@ Use the generated shield-key symbol as the mark. Pair it with the custom wordmar
 - Vault Blue stays concentrated in the primary action, rail, lock, status capsule, and verification cues; large surfaces remain white or cool-neutral.
 - Security decoration uses a disciplined grid and record-like geometry instead of an atmospheric hero treatment.
 - Reassurance panels use concrete vault evidence—encryption state, browser control, and verification readiness—while Vault Blue remains limited to trusted action and active security cues.
+
+- Auth screens keep the Vaultmark rail physically attached to the shield-key lockup, so the mark, wordmark, and trusted blue signal read as one signature rather than separate decorations.
+- Authentication copy uses Indonesian throughout the visible interface and describes concrete protection states rather than broad security slogans.
+- The auth footer is a quiet evidence record that states the browser-only location of the Master Password and active encryption status.
