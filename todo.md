@@ -410,7 +410,18 @@ Visual review pass: AuthScreen now uses a stronger connected Vaultmark lockup, I
 
 # Active dashboard toolbar regression recovery
 
-- [ ] Audit the live dashboard DOM and CSS grid rules causing Card/List and filter controls to split into separate columns.
-- [ ] Place the search bar in the topbar beside the Vaultmark project identity on desktop, with an accessible mobile fallback.
-- [ ] Keep Card/List, Sort, Settings, and Add Account in a single aligned action row; keep tag filters as a separate full-width row below.
+- [x] Audit the live dashboard DOM and CSS grid rules causing Card/List and filter controls to split into separate columns.
+- [x] Place the search bar in the topbar beside the Vaultmark project identity on desktop, with an accessible mobile fallback.
+- [x] Keep Card/List, Sort, Settings, and Add Account in a single aligned action row; keep tag filters as a separate full-width row below.
 - [ ] Validate the authenticated dashboard on desktop/mobile, then publish the layout repair to GitHub and deployment.
+
+Deployment status: commit `62a2c92` was pushed to GitHub `main`. At the immediate Vercel check, production remained `Ready` on previous commit `bd2978c`; the new automatic deployment should be rechecked after its build queue completes.
+
+# Active topbar-only recovery
+
+- [x] Compare the account-list and account-row layout before/after the toolbar change, then restore any unintended email-data styling regression.
+- [x] Restrict new CSS rules to the topbar, search position, summary action row, and tag-filter row only.
+- [x] Keep account cards/list, email typography, and account data spacing identical to their stable pre-toolbar layout.
+- [x] Run TypeScript/build and publish the isolated topbar correction.
+
+Isolation verification: the repair changes only `client/src/index.css` toolbar/topbar rules; `Home.tsx` account row markup, email copy actions, card/list styles, and vault data flow are unchanged. TypeScript, production build, and whitespace checks pass.
