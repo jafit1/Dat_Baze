@@ -407,3 +407,10 @@ Toolbar verification note: `pnpm check` and the production build passed. Screens
 - [x] Run TypeScript/build, push the interaction refinement to GitHub, and verify the production deployment.
 
 Visual review pass: AuthScreen now uses a stronger connected Vaultmark lockup, Indonesian-only visible security copy, and a quiet encryption evidence record while retaining the centered credential task. Desktop and mobile screenshot checks are stable.
+
+# Active dashboard toolbar regression recovery
+
+- [ ] Audit the live dashboard DOM and CSS grid rules causing Card/List and filter controls to split into separate columns.
+- [ ] Place the search bar in the topbar beside the Vaultmark project identity on desktop, with an accessible mobile fallback.
+- [ ] Keep Card/List, Sort, Settings, and Add Account in a single aligned action row; keep tag filters as a separate full-width row below.
+- [ ] Validate the authenticated dashboard on desktop/mobile, then publish the layout repair to GitHub and deployment.
