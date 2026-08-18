@@ -463,3 +463,11 @@ Validation note: `pnpm check` and the production build pass. Desktop 1280px and 
 - [x] Run TypeScript/build, verify responsive placement, and publish the update.
 
 Validation note: the Sonner viewport is explicitly fixed at `bottom-right`; save, import validation, JSON export, and CSV export use the configured toast duration. `pnpm check` and `pnpm build` pass, while desktop 1280px and mobile 390px captures remain responsive.
+
+# Active encrypted JSON import
+- [x] Inspect the uploaded backup schema and current Settings import entry point.
+- [x] Validate supported encrypted and plaintext account records without logging sensitive values.
+- [x] Encrypt accepted entries with the active Master Password and save them to the current user's Firestore vault.
+- [x] Show an import result toast, run TypeScript/build checks, and publish the update.
+
+Validation note: the uploaded legacy backup contains 163 email records. The importer preserves valid email records, uses plaintext password fields only when present, labels entries without a recoverable password, skips duplicate emails, then encrypts each accepted entry with the current vault Master Password before the Firestore write. `pnpm check` and `pnpm build` pass.

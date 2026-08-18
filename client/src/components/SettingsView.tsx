@@ -34,7 +34,7 @@ export type SettingsViewProps = {
   onProfileUpdate: (displayName: string, photoURL: string) => Promise<void>;
 };
 
-export default function SettingsView({ accounts, displayName, photoURL, lockMinutes, setLockMinutes, toastDuration, setToastDuration, theme, onToggleTheme, tagColors, setTagColors, onRenameTag, onDeleteTag, onImport, onExport, onProfileUpdate }: SettingsViewProps) {
+export default function SettingsView({ accounts, displayName, photoURL, lockMinutes, setLockMinutes, toastDuration, setToastDuration, theme, onToggleTheme, tagColors, setTagColors, onRenameTag, onDeleteTag, onImport: _onImport, onExport, onProfileUpdate }: SettingsViewProps) {
   const input = useRef<HTMLInputElement>(null);
   const tags = Array.from(new Set(accounts.flatMap(account => account.tags)));
 
@@ -103,11 +103,11 @@ export default function SettingsView({ accounts, displayName, photoURL, lockMinu
             <div className="setting-icon"><ArrowUpFromLine className="size-4" /></div>
             <div className="flex-1">
               <h3>Import & export</h3>
-              <p>Ekspor ciphertext terenkripsi atau impor JSON yang tervalidasi.</p>
+              <p>Impor email dari JSON lalu enkripsi ulang seluruh entri dengan Master Password aktif.</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <Button variant="outline" onClick={() => onExport("json")}><ArrowDownToLine className="mr-2 size-4" />Export JSON</Button>
                 <Button variant="outline" onClick={() => onExport("csv")}><ArrowDownToLine className="mr-2 size-4" />Export CSV</Button>
-                <input ref={input} type="file" accept="application/json,.json" className="hidden" onChange={event => event.target.files?.[0] && onImport(event.target.files[0])} />
+                <input ref={input} type="file" accept="application/json,.json" className="hidden" onChange={event => { const file = event.target.files?.[0]; if (file) window.dispatchEvent(new CustomEvent<File>("vaultmark-import-json", { detail: file })); event.currentTarget.value = ""; }} />
                 <Button variant="outline" onClick={() => input.current?.click()}><ArrowUpFromLine className="mr-2 size-4" />Import JSON</Button>
               </div>
             </div>
