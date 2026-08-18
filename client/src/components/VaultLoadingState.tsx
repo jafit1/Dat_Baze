@@ -1,4 +1,5 @@
 // Design philosophy: Minimalist Secure Workspace — loading should feel quiet, structured, and trustworthy without distracting from secure work.
+// Minimalist Secure Workspace: loading communicates secure progress through restrained blue motion and structural skeletons.
 import { ShieldCheck } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -14,9 +15,9 @@ export default function VaultLoadingState({ label }: { label: string }) {
           </div>
         </div>
         <div className="loading-heading">
-          <Skeleton className="loading-eyebrow" />
-          <Skeleton className="loading-title" />
-          <Skeleton className="loading-subtitle" />
+          <div className="loading-signal" aria-hidden="true"><span className="loading-signal-orbit loading-signal-orbit-a" /><span className="loading-signal-orbit loading-signal-orbit-b" /><span className="loading-signal-core"><ShieldCheck className="size-5" /></span></div>
+          <div className="loading-heading-copy"><Skeleton className="loading-eyebrow" /><Skeleton className="loading-title" /><Skeleton className="loading-subtitle" /></div>
+          <div className="loading-progress" aria-hidden="true"><span /></div>
         </div>
         <div className="loading-account-list">
           {Array.from({ length: 4 }).map((_, index) => (

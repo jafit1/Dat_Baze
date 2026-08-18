@@ -471,3 +471,11 @@ Validation note: the Sonner viewport is explicitly fixed at `bottom-right`; save
 - [x] Show an import result toast, run TypeScript/build checks, and publish the update.
 
 Validation note: the uploaded legacy backup contains 163 email records. The importer preserves valid email records, uses plaintext password fields only when present, labels entries without a recoverable password, skips duplicate emails, then encrypts each accepted entry with the current vault Master Password before the Firestore write. `pnpm check` and `pnpm build` pass.
+
+# Active tag color consistency and initial loading
+- [x] Audit tag badges in account details against the persisted category-color preference.
+- [x] Apply each saved category color consistently to account cards and list rows, with readable text contrast.
+- [x] Refine the first-load vault state into a smooth, reduced-motion-safe loading sequence.
+- [x] Run TypeScript/build checks, validate desktop/mobile layout, and publish the update.
+
+Validation note: rendered account badges inherit the saved category color through a readable tinted surface and accent edge in both themes. The initial loader now uses a short shield orbit, staged account skeleton reveal, scanning shimmer, and travelling progress line; all non-essential motion is disabled for reduced-motion users. `pnpm check` and `pnpm build` pass; desktop 1280px and mobile 390px captures remain stable.
