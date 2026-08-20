@@ -479,3 +479,10 @@ Validation note: the uploaded legacy backup contains 163 email records. The impo
 - [x] Run TypeScript/build checks, validate desktop/mobile layout, and publish the update.
 
 Validation note: rendered account badges inherit the saved category color through a readable tinted surface and accent edge in both themes. The initial loader now uses a short shield orbit, staged account skeleton reveal, scanning shimmer, and travelling progress line; all non-essential motion is disabled for reduced-motion users. `pnpm check` and `pnpm build` pass; desktop 1280px and mobile 390px captures remain stable.
+
+# Active search keyboard shortcut
+- [x] Audit the existing search field and ensure the shortcut will not conflict with text-entry or modal interactions.
+- [x] Add an accessible Cmd/Ctrl+K shortcut that focuses the vault search field without mutating vault data or saved preferences.
+- [x] Run TypeScript/build checks, confirm persisted vault settings remain untouched, and publish the update.
+
+Validation note: the shortcut is an event listener that only switches the current interface view and focuses/selects the search input. It explicitly ignores text-entry controls and dialogs, and it calls no Firestore write, encryption, import/export, account, tag, or localStorage mutation routine. `pnpm check` and `pnpm build` pass.

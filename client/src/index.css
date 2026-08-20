@@ -218,6 +218,8 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 @keyframes loading-row-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes loading-row-scan { 0%, 42% { transform: translateX(-115%); } 68%, 100% { transform: translateX(115%); } }
 .search-wrap { position: relative; }
+.topbar-search .search-wrap::after { display: inline-flex; min-width: 31px; height: 20px; align-items: center; justify-content: center; content: "⌘K"; border: 1px solid #dbe7ed; border-radius: 5px; color: #8797a5; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+.dark .topbar-search .search-wrap::after { border-color: #2b5265; color: #98b4c4; }
 .search-loading-icon { flex: none; color: #1facff; animation: search-spin .8s linear infinite; }
 .search-result-count { display: inline-flex; min-width: 20px; height: 20px; align-items: center; justify-content: center; border-radius: 999px; background: #f1f5f8; color: #7c8e9b; font-size: 10px; font-weight: 800; line-height: 1; }
 @keyframes search-spin { to { transform: rotate(360deg); } }
@@ -227,6 +229,7 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .dark .loading-status { color: #829aa9; }
 .dark .search-result-count { background: #183444; color: #9eb5c4; }
 @media (max-width: 767px) { .loading-shell { padding: 18px 14px; } .loading-panel { border-radius: 20px; padding: 18px; } .loading-heading { margin-top: 32px; } .loading-account-row { min-height: 68px; padding: 12px; } .loading-account-action { width: 42px; } .search-result-count { min-width: 18px; } }
+@media (max-width: 767px) { .topbar-search .search-wrap::after { display: none; } }
 @media (prefers-reduced-motion: reduce) { .loading-panel, .loading-panel::before, .loading-brand, .loading-signal-core, .loading-signal-orbit, .loading-progress > span, .loading-account-row, .loading-account-row::after, .loading-status-dot, .search-loading-icon { animation: none !important; } }
 /* Minimalist Secure Workspace — the auth surface repeats the shield-key, rail, and capsule as one quiet Vaultmark signature. */
 .brand-lockup { position: relative; min-width: max-content; }
