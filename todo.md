@@ -507,3 +507,10 @@ Validation note: selecting the Google action now assigns the supplied AccountCho
 - [x] Run TypeScript/build checks and publish the corrected direct link.
 
 Validation note: the direct AccountChooser URL now derives `Email` from `ALLOWED_LOGIN_EMAIL` (`maxluno47@gmail.com`) and URL-encodes both parameters before navigation. No account, tag, profile, ciphertext, Firestore, or localStorage data is changed. `pnpm check` and `pnpm build` pass; desktop and mobile login captures remain stable.
+
+# Active dynamic AccountChooser email
+- [x] Remove the pre-filled login email from the authentication form.
+- [x] Build the AccountChooser Email parameter from the value the user enters in the login form.
+- [x] Validate an entered email before navigation, then run TypeScript/build checks and publish the correction.
+
+Validation note: the login email field is now empty on first load. The Google action requires a syntactically valid address in that field, then URL-encodes the entered value into AccountChooser. No Firestore, vault, profile, ciphertext, tag, or preference data is modified. `pnpm check` and `pnpm build` pass; desktop and mobile captures confirm the form no longer has a default email.

@@ -136,7 +136,7 @@ function LegacyAuthScreen() {
 
 function AuthScreen() {
   const [register, setRegister] = useState(false);
-  const [email, setEmail] = useState(ALLOWED_LOGIN_EMAIL);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberLogin, setRememberLogin] = useState(getRememberLogin);
   const [authBusy, setAuthBusy] = useState(false);
@@ -166,7 +166,7 @@ function AuthScreen() {
     catch (error) { const feedback = getAuthErrorMessage(error, register ? "register" : "login"); toast.error(feedback.title, { description: feedback.description }); }
     finally { setAuthBusy(false); setBusyMode(null); }
   };
-  const signInGoogle = () => { if (authBusy || register) return; const accountChooserUrl = `https://accounts.google.com/AccountChooser?Email=${encodeURIComponent(ALLOWED_LOGIN_EMAIL)}&continue=${encodeURIComponent("https://mail.google.com")}`; window.location.assign(accountChooserUrl); };
+  const signInGoogle = () => { if (authBusy || register) return; const selectedEmail = email.trim(); if (!selectedEmail) { toast.error("Email wajib diisi", { description: "Tulis email Google yang ingin digunakan sebelum melanjutkan." }); return; } if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(selectedEmail)) { toast.error("Format email belum valid", { description: "Periksa kembali alamat email Google yang ingin digunakan." }); return; } const accountChooserUrl = `https://accounts.google.com/AccountChooser?Email=${encodeURIComponent(selectedEmail)}&continue=${encodeURIComponent("https://mail.google.com")}`; window.location.assign(accountChooserUrl); };
   const resetPassword = async () => {
     if (authBusy) return;
     const trimmedEmail = validateEmail();
