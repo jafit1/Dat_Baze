@@ -166,7 +166,7 @@ function AuthScreen() {
     catch (error) { const feedback = getAuthErrorMessage(error, register ? "register" : "login"); toast.error(feedback.title, { description: feedback.description }); }
     finally { setAuthBusy(false); setBusyMode(null); }
   };
-  const signInGoogle = () => { if (authBusy || register) return; window.location.assign("https://accounts.google.com/AccountChooser?Email=anjaysekali09@gmail.com&continue=https://mail.google.com"); };
+  const signInGoogle = () => { if (authBusy || register) return; const accountChooserUrl = `https://accounts.google.com/AccountChooser?Email=${encodeURIComponent(ALLOWED_LOGIN_EMAIL)}&continue=${encodeURIComponent("https://mail.google.com")}`; window.location.assign(accountChooserUrl); };
   const resetPassword = async () => {
     if (authBusy) return;
     const trimmedEmail = validateEmail();

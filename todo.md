@@ -500,3 +500,10 @@ Validation note: the authenticated login form now begins with the configured all
 - [x] Run TypeScript/build checks, verify the navigation control, and publish the update.
 
 Validation note: selecting the Google action now assigns the supplied AccountChooser URL immediately and does not invoke a confirmation dialog, Firebase popup, Firestore write, or vault data mutation. `pnpm check` and `pnpm build` pass; desktop and mobile login captures remain stable.
+
+# Active AccountChooser configured email correction
+- [x] Verify the configured Vaultmark allowlist email and the current AccountChooser URL.
+- [x] Construct the AccountChooser Email parameter from the configured allowlist value rather than a hard-coded sample email.
+- [x] Run TypeScript/build checks and publish the corrected direct link.
+
+Validation note: the direct AccountChooser URL now derives `Email` from `ALLOWED_LOGIN_EMAIL` (`maxluno47@gmail.com`) and URL-encodes both parameters before navigation. No account, tag, profile, ciphertext, Firestore, or localStorage data is changed. `pnpm check` and `pnpm build` pass; desktop and mobile login captures remain stable.
