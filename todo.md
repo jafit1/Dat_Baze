@@ -486,3 +486,10 @@ Validation note: rendered account badges inherit the saved category color throug
 - [x] Run TypeScript/build checks, confirm persisted vault settings remain untouched, and publish the update.
 
 Validation note: the shortcut is an event listener that only switches the current interface view and focuses/selects the search input. It explicitly ignores text-entry controls and dialogs, and it calls no Firestore write, encryption, import/export, account, tag, or localStorage mutation routine. `pnpm check` and `pnpm build` pass.
+
+# Active direct login and vault navigation
+- [x] Audit the current login triggers and the Personal Vault / Your accounts header interaction.
+- [x] Make the header a keyboard-accessible route back to the vault and correct direct-login navigation without writing user data.
+- [x] Run TypeScript/build checks, verify desktop/mobile interactions, and publish the update.
+
+Validation note: the authenticated login form now begins with the configured allowed email, while password validation and Firebase authentication remain unchanged. The Personal Vault / Your accounts header now activates the vault on click, Enter, or Space; it only changes in-memory view state and mobile navigation visibility. `pnpm check` and `pnpm build` pass; desktop and mobile login captures are stable.

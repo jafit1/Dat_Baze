@@ -220,6 +220,9 @@ html, body, .app-shell, .auth-shell, .lock-shell { transition: background-color 
 .search-wrap { position: relative; }
 .topbar-search .search-wrap::after { display: inline-flex; min-width: 31px; height: 20px; align-items: center; justify-content: center; content: "⌘K"; border: 1px solid #dbe7ed; border-radius: 5px; color: #8797a5; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 700; letter-spacing: -.03em; line-height: 1; }
 .dark .topbar-search .search-wrap::after { border-color: #2b5265; color: #98b4c4; }
+/* Minimalist Secure Workspace — the Personal Vault heading doubles as a quiet, keyboard-accessible route home. */
+.vault-heading-link { position: relative; min-width: 0; cursor: pointer; border-radius: 10px; outline: none; transition: color 160ms ease, transform 160ms cubic-bezier(.23,1,.32,1); }
+.vault-heading-link:hover { color: #0d80c9; transform: translateX(1px); }.vault-heading-link:focus-visible { box-shadow: 0 0 0 3px rgba(31,172,255,.18); }.vault-heading-link:active { transform: translateX(1px) scale(.98); }
 .search-loading-icon { flex: none; color: #1facff; animation: search-spin .8s linear infinite; }
 .search-result-count { display: inline-flex; min-width: 20px; height: 20px; align-items: center; justify-content: center; border-radius: 999px; background: #f1f5f8; color: #7c8e9b; font-size: 10px; font-weight: 800; line-height: 1; }
 @keyframes search-spin { to { transform: rotate(360deg); } }
