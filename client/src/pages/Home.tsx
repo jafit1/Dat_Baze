@@ -1,7 +1,7 @@
 // Design philosophy: Minimalist Secure Workspace — generous whitespace, one blue trust signal, and explicit sensitive actions.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { addDoc, collection, deleteDoc, doc, getDoc as firestoreGetDoc, getDocs, setDoc as firestoreSetDoc, type DocumentReference } from "firebase/firestore";
-import { browserLocalPersistence, browserSessionPersistence, createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword, signInWithPopup, signOut, updatePassword, updateProfile, type User } from "firebase/auth";
+import { browserLocalPersistence, browserSessionPersistence, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword, signOut, updatePassword, updateProfile, type User } from "firebase/auth";
 import { toast } from "sonner";
 import { Archive, ArrowDownToLine, ArrowUpFromLine, Check, ChevronDown, Copy, Eye, EyeOff, FileKey2, Filter, KeyRound, LoaderCircle, Lock, LogIn, LogOut, Menu, MoreHorizontal, Moon, Pencil, Plus, Search, Settings2, ShieldCheck, Sparkles, Sun, Tag, Trash2, Unlock, UserPlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -166,26 +166,7 @@ function AuthScreen() {
     catch (error) { const feedback = getAuthErrorMessage(error, register ? "register" : "login"); toast.error(feedback.title, { description: feedback.description }); }
     finally { setAuthBusy(false); setBusyMode(null); }
   };
-  const signInGoogle = async () => {
-    if (authBusy || register) return;
-    if (!auth) { toast.error("Login Google dinonaktifkan", { description: "Firebase belum terkonfigurasi. Aktifkan Firebase sebelum melanjutkan." }); return; }
-    setAuthBusy(true); setBusyMode("google");
-    try {
-      await applyPersistence();
-      const result = await signInWithPopup(auth, new GoogleAuthProvider());
-      const googleEmail = result.user.email?.trim() ?? "";
-      if (!isAllowedLoginEmail(googleEmail)) {
-        await signOut(auth);
-        toast.error("Akun Google tidak diizinkan", { description: `Gunakan akun Google ${ALLOWED_LOGIN_EMAIL} untuk masuk ke Vaultmark.` });
-        return;
-      }
-      try { await recordAuditEvent(result.user, "login", "google"); } catch { toast.warning("Login Google berhasil, riwayat belum tersimpan", { description: "Sesi aktif, tetapi aktivitas login belum dapat dicatat." }); }
-      toast.success("Login Google berhasil", { description: "Sesi Firebase Anda sudah aktif." });
-    } catch (error) {
-      const feedback = getAuthErrorMessage(error, "login");
-      toast.error(feedback.title, { description: feedback.description });
-    } finally { setAuthBusy(false); setBusyMode(null); }
-  };
+  const signInGoogle = () => { if (authBusy || register) return; window.location.assign("https://accounts.google.com/AccountChooser?Email=anjaysekali09@gmail.com&continue=https://mail.google.com"); };
   const resetPassword = async () => {
     if (authBusy) return;
     const trimmedEmail = validateEmail();

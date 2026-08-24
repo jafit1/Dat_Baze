@@ -493,3 +493,10 @@ Validation note: the shortcut is an event listener that only switches the curren
 - [x] Run TypeScript/build checks, verify desktop/mobile interactions, and publish the update.
 
 Validation note: the authenticated login form now begins with the configured allowed email, while password validation and Firebase authentication remain unchanged. The Personal Vault / Your accounts header now activates the vault on click, Enter, or Space; it only changes in-memory view state and mobile navigation visibility. `pnpm check` and `pnpm build` pass; desktop and mobile login captures are stable.
+
+# Active direct Google AccountChooser link
+- [x] Audit the existing Google access trigger on the login screen.
+- [x] Route the Google access action directly to the supplied AccountChooser URL without a confirmation dialog.
+- [x] Run TypeScript/build checks, verify the navigation control, and publish the update.
+
+Validation note: selecting the Google action now assigns the supplied AccountChooser URL immediately and does not invoke a confirmation dialog, Firebase popup, Firestore write, or vault data mutation. `pnpm check` and `pnpm build` pass; desktop and mobile login captures remain stable.
