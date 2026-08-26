@@ -105,17 +105,17 @@ export default function ProfileEditor({ displayName = "", photoURL = "", onSave 
           </label>
           <div className="profile-upload-row">
             <input ref={fileInput} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={handleFile} aria-label="Pilih file foto profil" />
-            <Button type="button" variant="outline" onClick={() => fileInput.current?.click()} aria-label="Upload dan crop foto profil"><ImagePlus className="mr-2 size-4 text-[#1FACFF]" />Upload foto</Button>
-            {photo && <Button type="button" variant="ghost" className="text-rose-600 hover:bg-rose-50" onClick={clearPhoto} aria-label="Hapus foto profil"><Trash2 className="mr-2 size-4" />Hapus</Button>}
+            <Button type="button" variant="outline" onClick={() => fileInput.current?.click()} aria-label="Upload dan crop foto profil"><ImagePlus className="mr-2 size-4 text-[#b6d9fc]" />Upload foto</Button>
+            {photo && <Button type="button" variant="ghost" className="text-rose-600 hover:bg-rose-500/10" onClick={clearPhoto} aria-label="Hapus foto profil"><Trash2 className="mr-2 size-4" />Hapus</Button>}
           </div>
           <label className="profile-field">
             <span>Atau gunakan Photo URL</span>
-            <div className="relative"><Link2 className="pointer-events-none absolute left-3 top-3 size-4 text-slate-400" /><Input className="pl-9" value={photoInput} inputMode="url" autoComplete="url" placeholder="https://contoh.com/foto.jpg" onChange={event => setPhotoURLInput(event.target.value)} aria-describedby="profile-photo-help" /></div>
+            <div className="relative"><Link2 className="pointer-events-none absolute left-3 top-3 size-4 text-[#9da7ba]" /><Input className="pl-9" value={photoInput} inputMode="url" autoComplete="url" placeholder="https://contoh.com/foto.jpg" onChange={event => setPhotoURLInput(event.target.value)} aria-describedby="profile-photo-help" /></div>
           </label>
           <p id="profile-photo-help" className="profile-help"><Image className="size-3.5" />Upload diproses lokal menjadi JPEG square maksimal 180×180 dan sekitar 100 KB.</p>
         </div>
         {error && <p className="profile-error" role="alert">{error}</p>}
-        <Button className="mt-4 bg-[#1FACFF] text-white hover:bg-[#0D8DDB]" onClick={save} disabled={saving} aria-label="Simpan perubahan profil">
+        <Button className="mt-4 bg-[#663af3] text-white hover:bg-[#7c53ff]" onClick={save} disabled={saving} aria-label="Simpan perubahan profil">
           {saving ? <LoaderCircle className="mr-2 size-4 animate-spin" /> : <Check className="mr-2 size-4" />}
           {saving ? "Menyimpan..." : "Simpan profil"}
         </Button>

@@ -40,22 +40,22 @@ export default function PasswordChangeRequired({ email, onSubmit, onLogout }: Pa
   return (
     <main className="lock-shell">
       <div className="lock-card password-change-card">
-        <div className="mx-auto flex size-16 items-center justify-center rounded-3xl bg-[#EAF7FF]">
-          <KeyRound className="size-7 text-[#1FACFF]" />
+        <div className="icon-well mx-auto">
+          <KeyRound className="size-7 text-[#b6d9fc]" />
         </div>
         <div className="eyebrow mt-7">password update required</div>
-        <h1 className="mt-3 font-display text-3xl font-semibold tracking-[-.05em]">Amankan akun Anda.</h1>
-        <p className="mt-3 text-sm leading-6 text-slate-500">Password awal untuk {email} harus diganti sebelum Anda dapat membuka vault.</p>
+        <h1 className="mt-3 headline-gradient font-medium">Amankan akun Anda.</h1>
+        <p className="mt-3 text-sm leading-6 text-[#c7d3ea]">Password awal untuk {email} harus diganti sebelum Anda dapat membuka vault.</p>
         <form className="mt-7 space-y-3" onSubmit={submit}>
           <Input autoFocus type="password" autoComplete="new-password" placeholder="Password baru" value={password} onChange={event => setPassword(event.target.value)} aria-label="Password baru" />
           <Input type="password" autoComplete="new-password" placeholder="Konfirmasi password baru" value={confirmation} onChange={event => setConfirmation(event.target.value)} aria-label="Konfirmasi password baru" />
-          {error && <p className="text-sm font-medium text-rose-600" role="alert">{error}</p>}
-          <Button type="submit" disabled={saving} className="h-12 w-full bg-[#1FACFF] text-white hover:bg-[#0D8DDB]">
+          {error && <p className="text-sm font-medium text-[#ff9d85]" role="alert">{error}</p>}
+          <Button type="submit" disabled={saving} className="h-12 w-full bg-[#663af3] text-white hover:bg-[#7c53ff]">
             <ShieldCheck className="mr-2 size-4" />
             {saving ? "Menyimpan..." : "Ganti password"}
           </Button>
         </form>
-        <button type="button" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900" onClick={onLogout}>
+        <button type="button" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#c7d3ea] hover:text-[#d8ecf8]" onClick={onLogout}>
           <LogOut className="size-4" /> Logout
         </button>
       </div>

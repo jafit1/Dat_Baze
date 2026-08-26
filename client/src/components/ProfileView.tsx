@@ -63,9 +63,9 @@ export default function ProfileView({ user, displayName, photoURL, events, loadi
       <section ref={dialogRef} className="profile-page" role="dialog" aria-modal="true" aria-labelledby="profile-page-title" tabIndex={-1}>
         <div className="profile-page-header">
           <div>
-            <div className="eyebrow flex items-center gap-2"><ShieldCheck className="size-3 text-[#1FACFF]" />account record</div>
+            <div className="eyebrow flex items-center gap-2"><ShieldCheck className="size-3 text-[#b6d9fc]" />account record</div>
             <h1 id="profile-page-title" className="mt-2 font-display text-2xl font-semibold tracking-[-.05em]">Profil pengguna</h1>
-            <p className="mt-2 text-sm text-slate-500">Identitas akun dan jejak sesi Firebase Anda.</p>
+            <p className="mt-2 text-sm text-[#c7d3ea]">Identitas akun dan jejak sesi Firebase Anda.</p>
           </div>
           <button type="button" className="icon-button action-tooltip" data-tooltip="Tutup profil" aria-label="Tutup profil pengguna" onClick={onClose}><X className="size-4" /></button>
         </div>
@@ -84,7 +84,7 @@ export default function ProfileView({ user, displayName, photoURL, events, loadi
             </article>
           </div>
           <section className="audit-card" aria-labelledby="audit-title">
-            <div className="audit-card-header"><div><h2 id="audit-title" className="font-display text-lg font-semibold tracking-[-.03em]">Riwayat login</h2><p className="mt-1 text-xs text-slate-500">Maksimal 30 aktivitas terbaru. Password dan data vault tidak pernah dicatat.</p></div><button type="button" className="icon-button action-tooltip" data-tooltip="Muat ulang riwayat" aria-label="Muat ulang riwayat login" onClick={() => void onRefresh()} disabled={loading}><RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} /></button></div>
+            <div className="audit-card-header"><div><h2 id="audit-title" className="font-display text-lg font-semibold tracking-[-.03em]">Riwayat login</h2><p className="mt-1 text-xs text-[#c7d3ea]">Maksimal 30 aktivitas terbaru. Password dan data vault tidak pernah dicatat.</p></div><button type="button" className="icon-button action-tooltip" data-tooltip="Muat ulang riwayat" aria-label="Muat ulang riwayat login" onClick={() => void onRefresh()} disabled={loading}><RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} /></button></div>
             {loading ? <div className="audit-loading" aria-live="polite"><span className="audit-loading-dot" /><span>Memuat riwayat login...</span></div> : error ? <div className="audit-error" role="alert">{error}<button type="button" onClick={() => void onRefresh()}>Coba lagi</button></div> : events.length ? <ul className="audit-list">{events.map(event => <li className="audit-event" key={event.id}><span className={`audit-event-icon ${event.type}`}>{event.type === "login" ? <LogIn className="size-4" /> : <LogOut className="size-4" />}</span><span className="audit-event-copy"><strong>{event.type === "login" ? "Login berhasil" : "Logout"}</strong><small>{formatDate(event.createdAt)} · {event.method === "google" ? "Google Sign-In" : "Email & password"}</small><em><MonitorSmartphone className="size-3" /> Browser ini</em></span></li>)}</ul> : <div className="audit-empty">Belum ada riwayat login yang tercatat pada akun ini.</div>}
           </section>
         </div>

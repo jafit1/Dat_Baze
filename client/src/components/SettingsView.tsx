@@ -82,21 +82,21 @@ export default function SettingsView({ accounts, displayName, photoURL, lockMinu
               <h3>Tag management</h3>
               <p>{tags.length} tag aktif · Rename, merge, atau hapus massal.</p>
               <div className="mt-4 space-y-2">
-                {tags.length ? tags.map(tag => <div key={tag} className="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2">
+                {tags.length ? tags.map(tag => <div key={tag} className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
                   <div className="tag-color-control">
                     <span className="tag-swatch" style={{ backgroundColor: getTagColor(tag, tagColors) }} />
-                    <Badge variant="secondary" className="rounded-lg bg-white text-slate-600">{tag}</Badge>
+                    <Badge variant="secondary" className="rounded-lg bg-white/5 text-[#c7d3ea]">{tag}</Badge>
                     <div className="tag-color-options" role="group" aria-label={`Warna tag ${tag}`}>
                       {TAG_COLORS.map(color => <button key={color} type="button" className={`tag-color-option ${getTagColor(tag, tagColors) === color ? "selected" : ""}`} style={{ backgroundColor: color }} aria-label={`Pilih warna ${color}`} onClick={() => { const next = { ...tagColors, [tag]: color }; setTagColors(next); window.localStorage.setItem(TAG_COLORS_KEY, JSON.stringify(next)); }} />)}
                     </div>
                   </div>
                   <span className="ml-auto flex gap-1">
                     <Button variant="ghost" size="sm" onClick={() => { const next = window.prompt(`Rename tag “${tag}” menjadi:`, tag)?.trim(); if (next && next !== tag) onRenameTag(tag, next); }}>Rename</Button>
-                    <Button variant="ghost" size="sm" className="text-rose-600 hover:bg-rose-50" onClick={() => { if (window.confirm(`Hapus tag “${tag}” dari semua entri?`)) onDeleteTag(tag); }}>Remove</Button>
+                    <Button variant="ghost" size="sm" className="text-rose-600 hover:bg-rose-500/10" onClick={() => { if (window.confirm(`Hapus tag “${tag}” dari semua entri?`)) onDeleteTag(tag); }}>Remove</Button>
                   </span>
-                </div>) : <p className="text-xs text-slate-400">Belum ada tag. Tambahkan dari form akun.</p>}
+                </div>) : <p className="text-xs text-[#9da7ba]">Belum ada tag. Tambahkan dari form akun.</p>}
               </div>
-              <p className="mt-3 text-[11px] text-slate-400">Tag dapat ditambahkan atau dihilangkan dari form akun, dan dikelola massal di sini.</p>
+              <p className="mt-3 text-[11px] text-[#9da7ba]">Tag dapat ditambahkan atau dihilangkan dari form akun, dan dikelola massal di sini.</p>
             </div>
           </div>
           <div className="setting-card">
@@ -125,13 +125,13 @@ export default function SettingsView({ accounts, displayName, photoURL, lockMinu
             <div className="flex-1">
               <h3>Delete account & data</h3>
               <p>Hapus akun Firebase dan seluruh dokumen Firestore secara permanen.</p>
-              <Button variant="outline" className="mt-4 text-rose-600 hover:bg-rose-50" onClick={() => toast.error("Konfirmasi tambahan diperlukan", { description: "Tindakan permanen ini belum dijalankan di preview." })}>Delete permanently</Button>
+              <Button variant="outline" className="mt-4 text-rose-600 hover:bg-rose-500/10" onClick={() => toast.error("Konfirmasi tambahan diperlukan", { description: "Tindakan permanen ini belum dijalankan di preview." })}>Delete permanently</Button>
             </div>
           </div>
         </div>
-        <div className="mt-8 flex items-start gap-3 rounded-2xl bg-[#F4FAFF] p-4 text-xs leading-5 text-slate-500">
-          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#1FACFF]" />
-          <span><strong className="text-slate-700">Security note.</strong> Firestore menyimpan ciphertext saja. Master Password tidak pernah masuk ke server dan tidak dapat dipulihkan jika terlupa.</span>
+        <div className="mt-8 flex items-start gap-3 rounded-2xl bg-[#F4FAFF] p-4 text-xs leading-5 text-[#c7d3ea]">
+          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#b6d9fc]" />
+          <span><strong className="text-[#c7d3ea]">Security note.</strong> Firestore menyimpan ciphertext saja. Master Password tidak pernah masuk ke server dan tidak dapat dipulihkan jika terlupa.</span>
         </div>
       </div>
     </section>

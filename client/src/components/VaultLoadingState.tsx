@@ -11,7 +11,7 @@ export default function VaultLoadingState({ label }: { label: string }) {
           <img src="/assets/vaultmark-logo.svg" className="size-9 rounded-xl" alt="Vaultmark" />
           <div>
             <div className="font-display text-[15px] font-semibold tracking-[-.03em]">vaultmark</div>
-            <div className="text-[10px] font-medium uppercase tracking-[.18em] text-slate-400">private workspace</div>
+            <div className="text-[10px] font-medium uppercase tracking-[.18em] text-[#9da7ba]">private workspace</div>
           </div>
         </div>
         <div className="loading-heading">
@@ -32,7 +32,7 @@ export default function VaultLoadingState({ label }: { label: string }) {
           ))}
         </div>
         <div className="loading-status">
-          <ShieldCheck className="size-4 text-[#1FACFF]" />
+          <ShieldCheck className="size-4 text-[#b6d9fc]" />
           <span>{label}</span>
           <span className="loading-status-dot" aria-hidden="true" />
         </div>

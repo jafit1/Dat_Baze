@@ -25,7 +25,7 @@ function App() {
     return () => window.removeEventListener("vaultmark-toast-duration-change", syncDuration);
   }, []);
 
-  return <ErrorBoundary><ThemeProvider defaultTheme="light" switchable><TooltipProvider><Toaster richColors position="bottom-right" duration={toastDuration} /><Home /></TooltipProvider></ThemeProvider></ErrorBoundary>;
+  return <ErrorBoundary><ThemeProvider defaultTheme="dark" switchable><TooltipProvider><Toaster richColors position="bottom-right" duration={toastDuration} /><Home /></TooltipProvider></ThemeProvider></ErrorBoundary>;
 }
 
 export default App;
