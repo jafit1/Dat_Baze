@@ -105,7 +105,7 @@ export default function ProfileImageCropDialog({ file, onCancel, onApply }: Prof
     <Dialog open={Boolean(file)} onOpenChange={open => { if (!open && !processing) onCancel(); }}>
       <DialogContent className="profile-crop-dialog" aria-describedby="profile-crop-description">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2"><Crop className="size-4 text-[#b6d9fc]" />Crop foto profil</DialogTitle>
+          <DialogTitle className="flex items-center gap-2"><Crop className="size-4 text-[#1FACFF]" />Crop foto profil</DialogTitle>
           <DialogDescription id="profile-crop-description">Geser gambar di dalam kotak, lalu atur zoom. Hasil disimpan sebagai JPEG kecil di browser.</DialogDescription>
         </DialogHeader>
         <div className={`profile-crop-viewport ${dragging ? "dragging" : ""}`} role="application" aria-label="Area crop foto profil" onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp}>
@@ -119,7 +119,7 @@ export default function ProfileImageCropDialog({ file, onCancel, onApply }: Prof
         </div>
         <DialogFooter>
           <Button type="button" variant="outline" onClick={onCancel} disabled={processing}>Batal</Button>
-          <Button type="button" className="bg-[#663af3] text-white hover:bg-[#7c53ff]" onClick={crop} disabled={processing || !imageSize.width}>{processing ? <LoaderCircle className="mr-2 size-4 animate-spin" /> : <Crop className="mr-2 size-4" />}{processing ? "Memproses..." : "Gunakan foto"}</Button>
+          <Button type="button" className="bg-[#1FACFF] text-white hover:bg-[#0D8DDB]" onClick={crop} disabled={processing || !imageSize.width}>{processing ? <LoaderCircle className="mr-2 size-4 animate-spin" /> : <Crop className="mr-2 size-4" />}{processing ? "Memproses..." : "Gunakan foto"}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
