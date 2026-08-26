@@ -1,4 +1,4 @@
-﻿// Design philosophy: Minimalist Secure Workspace â€” generous whitespace, one blue trust signal, and explicit sensitive actions.
+// Design philosophy: Minimalist Secure Workspace â€” generous whitespace, one blue trust signal, and explicit sensitive actions.
 import { useEffect, useMemo, useRef, useState } from "react";
 import { addDoc, collection, deleteDoc, doc, getDoc as firestoreGetDoc, getDocs, setDoc as firestoreSetDoc, type DocumentReference } from "firebase/firestore";
 import { browserLocalPersistence, browserSessionPersistence, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword, signOut, updatePassword, updateProfile, type User } from "firebase/auth";
@@ -40,113 +40,16 @@ function getFirestoreErrorMessage(error: unknown) {
   return message || "Periksa koneksi internet dan konfigurasi Cloud Firestore, lalu coba lagi.";
 }
 
-const TOAST_DURATION_KEY = "vaultmark-toast-duration";
-const REMEMBER_LOGIN_KEY = "vaultmark-remember-login";
-const DEFAULT_TOAST_DURATION = 3600;
-const TAG_COLORS = ["#1FACFF", "#7C5CFC", "#22B573", "#F59E0B", "#EF6A6A", "#E45BB8", "#64748B"];
-const TAG_COLORS_KEY = "vaultmark-tag-colors";
+import AuthScreen from "./AuthScreen";
+import { ConfirmDialog, CopyButton, Logo, SecurityPolicyUnavailable, Totp, useFocusTrap } from "@/components/vault-ui";
+import { csvCell, downloadText, getTagColor, getTagColors, getToastDuration, readImportBackup, type ImportSummary } from "@/lib/vault-helpers";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
+
 const VERIFIER_DOCUMENT_ID = "verifier";
 const VERIFIER_RECORD: VaultAccount = { id: VERIFIER_DOCUMENT_ID, service: "vaultmark-verifier", email: "verifier@vaultmark.local", password: "", tags: ["internal"], updatedAt: 0 };
-function getTagColors(): Record<string, string> { if (typeof window === "undefined") return {}; try { return JSON.parse(window.localStorage.getItem(TAG_COLORS_KEY) || "{}"); } catch { return {}; } }
-function getTagColor(tag: string, colors: Record<string, string>) { return colors[tag] || TAG_COLORS[Math.abs(tag.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0)) % TAG_COLORS.length]; }
-function getToastDuration() { if (typeof window === "undefined") return DEFAULT_TOAST_DURATION; const stored = Number(window.localStorage.getItem(TOAST_DURATION_KEY)); return [2400, 3600, 5200, 8000].includes(stored) ? stored : DEFAULT_TOAST_DURATION; }
-function getRememberLogin() { if (typeof window === "undefined") return true; return window.localStorage.getItem(REMEMBER_LOGIN_KEY) !== "false"; }
-function getAuthErrorMessage(error: unknown, action: "login" | "register" | "reset") {
-  const code = typeof error === "object" && error !== null && "code" in error ? String((error as { code?: unknown }).code) : "";
-  if (code === "auth/configuration-not-found" || code === "auth/operation-not-allowed") return { title: "Firebase Authentication belum aktif", description: "Aktifkan provider Email/password di Firebase Console â†’ Authentication â†’ Sign-in method, lalu tambahkan domain live pada Authentication â†’ Settings â†’ Authorized domains." };
-  if (code === "auth/invalid-api-key" || code === "auth/project-not-found" || code === "auth/app-not-authorized") return { title: "Konfigurasi Firebase tidak cocok", description: "Periksa VITE_FIREBASE_API_KEY, project ID, dan konfigurasi Web App pada deployment." };
-  if (code === "auth/user-not-found") return { title: "Akun belum terdaftar", description: action === "reset" ? "Email ini belum terdaftar di Firebase Authentication." : "Gunakan Buat akun baru terlebih dahulu, atau periksa kembali alamat email Anda." };
-  if (code === "auth/email-already-in-use") return { title: "Akun sudah terdaftar", description: "Gunakan Masuk ke vault atau pilih Lupa Password untuk membuat password baru." };
-  if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/invalid-login-credentials") return { title: action === "reset" ? "Email belum dapat diproses" : "Login gagal", description: action === "reset" ? "Pastikan email allowlist sudah terdaftar di Firebase Authentication." : "Email atau password tidak cocok. Jika akun belum pernah dibuat, gunakan Buat akun baru." };
-  if (code === "auth/user-disabled") return { title: "Akun dinonaktifkan", description: "Akun ini tidak dapat digunakan. Hubungi administrator Firebase untuk pemeriksaan lebih lanjut." };
-  if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") return { title: "Login Google dibatalkan", description: "Jendela Google ditutup sebelum autentikasi selesai." };
-  if (code === "auth/popup-blocked") return { title: "Popup Google diblokir", description: "Izinkan popup untuk Vaultmark, lalu coba Login Google lagi." };
-  if (code === "auth/unauthorized-domain") return { title: "Domain belum diizinkan", description: "Tambahkan domain live Vaultmark pada Firebase Console â†’ Authentication â†’ Settings â†’ Authorized domains." };
-  if (code === "auth/too-many-requests") return { title: "Percobaan terlalu banyak", description: "Tunggu beberapa saat sebelum mencoba autentikasi lagi." };
-  return { title: action === "reset" ? "Reset password belum berhasil" : action === "register" ? "Pendaftaran belum berhasil" : "Autentikasi belum berhasil", description: error instanceof Error ? error.message : "Periksa koneksi dan konfigurasi Firebase, lalu coba lagi." };
-}
-function useDebouncedValue(value: string, delay: number) { const [debounced, setDebounced] = useState(value); useEffect(() => { const timeout = window.setTimeout(() => setDebounced(value), delay); return () => window.clearTimeout(timeout); }, [value, delay]); return debounced; }
-function csvCell(value: unknown) { return '"' + String(value ?? "").replaceAll('"', '""') + '"'; }
-function downloadText(filename: string, content: string, type = "text/plain;charset=utf-8") { const blob = new Blob([content], { type }); const url = URL.createObjectURL(blob); const anchor = document.createElement("a"); anchor.href = url; anchor.download = filename; anchor.click(); URL.revokeObjectURL(url); }
-type ImportSummary = { accounts: VaultAccount[]; skipped: number };
-function isPlainRecord(value: unknown): value is Record<string, unknown> { return typeof value === "object" && value !== null && !Array.isArray(value); }
-function importTimestamp(value: unknown, fallback: number) { if (typeof value === "number" && Number.isFinite(value)) return value; if (typeof value === "string") { const parsed = Date.parse(value); if (!Number.isNaN(parsed)) return parsed; } return fallback; }
-function isImportEmail(value: unknown): value is string { return typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()); }
-async function readImportBackup(file: File, masterPassword: string): Promise<ImportSummary> {
-  if (file.size > 10_000_000) throw new Error("Ukuran berkas melebihi batas 10 MB.");
-  const payload: unknown = JSON.parse(await file.text());
-  if (!isPlainRecord(payload) || !Array.isArray(payload.accounts)) throw new Error("Struktur JSON tidak didukung. Gunakan berkas yang memiliki daftar accounts.");
-  const rows = payload.accounts.filter(isPlainRecord);
-  if (!rows.length) throw new Error("Tidak ada entri akun yang dapat diimpor.");
-  if (payload.format === "vaultmark-json") {
-    const decrypted = await Promise.all(rows.map(async row => { try { return await decryptAccount(row as EncryptedRecord, masterPassword); } catch { return null; } }));
-    const accounts = decrypted.filter((account): account is VaultAccount => account !== null);
-    if (!accounts.length) throw new Error("Cadangan Vaultmark tidak dapat dibuka dengan Master Password yang aktif.");
-    return { accounts, skipped: rows.length - accounts.length };
-  }
-  const now = Date.now(); const accounts: VaultAccount[] = []; let skipped = payload.accounts.length - rows.length;
-  rows.forEach(row => {
-    if (!isImportEmail(row.email)) { skipped += 1; return; }
-    const email = row.email.trim(); const password = typeof row.password === "string" ? row.password : "";
-    const tagValues = [...(Array.isArray(row.tags) ? row.tags : []), ...(Array.isArray(row.labels) ? row.labels : [])].filter((tag): tag is string => typeof tag === "string" && Boolean(tag.trim())).map(tag => tag.trim());
-    const tags = Array.from(new Set(["Imported", ...tagValues, ...(password ? [] : ["Password belum tersedia"])]));
-    accounts.push({ id: typeof row.id === "string" && row.id.trim() ? row.id : crypto.randomUUID(), service: email.slice(email.indexOf("@") + 1), email, password, tags, createdAt: importTimestamp(row.createdAt, now), updatedAt: importTimestamp(row.updatedAt, now) });
-  });
-  if (!accounts.length) throw new Error("Tidak ditemukan alamat email yang valid pada berkas impor.");
-  return { accounts, skipped };
-}
-function Logo() { return <div className="brand-lockup flex items-center gap-3"><img src="/assets/vaultmark-logo.svg" className="brand-mark size-9 rounded-xl" alt="Vaultmark" /><div><div className="brand-wordmark font-display text-[15px] font-semibold tracking-[-.03em]">vaultmark</div><div className="brand-subline text-[10px] font-medium uppercase tracking-[.18em] text-slate-400">private workspace</div></div></div>; }
-function useFocusTrap(active: boolean, onEscape?: () => void) { const ref = useRef<HTMLDivElement>(null); useEffect(() => { if (!active) return; const root = ref.current; if (!root) return; const selector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'; const getFocusable = () => Array.from(root.querySelectorAll<HTMLElement>(selector)); const first = getFocusable()[0]; first?.focus(); const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") { event.preventDefault(); onEscape?.(); return; } if (event.key !== "Tab") return; const items = getFocusable(); if (!items.length) return; const current = document.activeElement; const firstItem = items[0]; const lastItem = items[items.length - 1]; if (event.shiftKey && current === firstItem) { event.preventDefault(); lastItem.focus(); } else if (!event.shiftKey && current === lastItem) { event.preventDefault(); firstItem.focus(); } }; document.addEventListener("keydown", onKeyDown); return () => document.removeEventListener("keydown", onKeyDown); }, [active, onEscape]); return ref; }
-function ConfirmDialog({ title, message, confirmLabel, tone = "default", onClose, onConfirm }: { title: string; message: string; confirmLabel: string; tone?: "default" | "danger"; onClose: () => void; onConfirm: () => void }) { const dialogRef = useFocusTrap(true, onClose); return <div className="modal-backdrop compact-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}><div ref={dialogRef} className="modal-card confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div className="flex items-start gap-3"><div className={`confirm-mark ${tone === "danger" ? "danger" : ""}`}>{tone === "danger" ? <Trash2 className="size-4" /> : <LogIn className="size-4" />}</div><div className="min-w-0"><h2 id="confirm-title" className="font-display text-lg font-semibold tracking-[-.03em] text-slate-900">{title}</h2><p className="mt-1 text-sm leading-5 text-slate-500">{message}</p></div><button className="icon-button action-tooltip ml-auto shrink-0" data-tooltip="Tutup" aria-label="Tutup dialog" onClick={onClose}><X className="size-4" /></button></div><div className="mt-5 flex justify-end gap-2"><Button variant="outline" onClick={onClose}>Batal</Button><Button className={tone === "danger" ? "bg-rose-500 text-white hover:bg-rose-600" : "bg-[#1FACFF] text-white hover:bg-[#0D8DDB]"} onClick={onConfirm}>{confirmLabel}</Button></div></div></div>; }
-function CopyButton({ value, label }: { value: string; label: string }) { const [copied, setCopied] = useState(false); return <button title={`Salin ${label}`} onClick={async () => { await navigator.clipboard.writeText(value); setCopied(true); toast.success(`${label} berhasil disalin`, { description: label === "password" ? "Password tersalin. Clipboard akan dibersihkan dalam 12 detik." : "Clipboard akan dibersihkan dalam 12 detik.", duration: getToastDuration() }); setTimeout(() => { navigator.clipboard.writeText("").catch(() => undefined); setCopied(false); }, 12000); }} className="icon-button action-tooltip" data-tooltip={`Salin ${label}`} aria-label={`Salin ${label}`}>{copied ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4" />}</button>; }
-function Totp({ secret }: { secret?: string }) { const [now, setNow] = useState(Date.now()); useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []); if (!secret) return null; const remain = 30 - Math.floor((now / 1000) % 30); const code = getTotpCode(secret) ?? "------"; return <div className="totp-card"><div className="totp-inline"><span className="totp-label">2FA</span><span className="font-mono text-sm font-semibold tracking-[.16em] text-slate-800">{code}</span><span className="totp-remaining">{remain}s</span><CopyButton value={code} label="kode 2FA" /></div><Progress value={(remain / 30) * 100} className="mt-1 h-1 bg-[#D9F0FF] [&>div]:bg-[#1FACFF]" /></div>; }
-function SecurityPolicyUnavailable({ message, onRetry, onLogout }: { message: string; onRetry: () => void; onLogout: () => void }) { return <main className="lock-shell"><Logo /><div className="lock-card password-change-card"><div className="mx-auto flex size-16 items-center justify-center rounded-3xl bg-[#FFF3E8]"><ShieldCheck className="size-7 text-[#D97706]" /></div><div className="eyebrow mt-7">security policy unavailable</div><h1 className="mt-3 font-display text-3xl font-semibold tracking-[-.05em]">Kebijakan keamanan belum siap.</h1><p className="mt-3 text-sm leading-6 text-slate-500">Vault tetap dikunci sampai policy akun berhasil dibaca dari Firestore. Password dan data vault tidak dilewati atau disimpan lokal.</p><p className="mt-4 text-sm font-medium leading-6 text-rose-600" role="alert">{message}</p><Button className="mt-6 h-12 w-full bg-[#1FACFF] text-white hover:bg-[#0D8DDB]" onClick={onRetry}>Coba lagi</Button><button type="button" className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900" onClick={onLogout}><LogOut className="size-4" /> Logout</button></div></main>; }
-function AuthScreen() {
-  const [register, setRegister] = useState(false);
-  const [username, setUsername] = useState(ALLOWED_LOGIN_USERNAME);
-  const [password, setPassword] = useState("");
-  const [rememberLogin, setRememberLogin] = useState(getRememberLogin);
-  const [authBusy, setAuthBusy] = useState(false);
-  const [busyMode, setBusyMode] = useState<"password" | null>(null);
-  const validateIdentifier = () => {
-    const raw = username.trim();
-    if (!raw) { toast.error("Username wajib diisi", { description: "Masukkan username sebelum melanjutkan." }); return null; }
-    const resolved = resolveLoginIdentifier(raw);
-    if (!resolved) {
-      if (raw.includes("@")) toast.error("Akun tidak diizinkan", { description: `Gunakan akun ${ALLOWED_LOGIN_EMAIL} untuk masuk ke Vaultmark.` });
-      else toast.error("Username tidak dikenali", { description: `Gunakan username ${ALLOWED_LOGIN_USERNAME} untuk masuk ke Vaultmark.` });
-      return null;
-    }
-    return resolved;
-  };
-  const applyPersistence = async () => {
-    if (!auth) return false;
-    await setPersistence(auth, rememberLogin ? browserLocalPersistence : browserSessionPersistence);
-    window.localStorage.setItem(REMEMBER_LOGIN_KEY, String(rememberLogin));
-    return true;
-  };
-  const submit = async () => {
-    if (authBusy) return;
-    const trimmedEmail = validateIdentifier();
-    if (!trimmedEmail) return;
-    if (!password) { toast.error("Password wajib diisi", { description: "Masukkan password sebelum melanjutkan." }); return; }
-    if (password.length < 6) { toast.error("Password terlalu pendek", { description: "Gunakan minimal 6 karakter." }); return; }
-    if (!auth) { toast.error("Login dinonaktifkan", { description: "Firebase belum terkonfigurasi. Password tidak boleh melewati validasi server." }); return; }
-    setAuthBusy(true); setBusyMode("password");
-    try { await applyPersistence(); const credentials = register ? await createUserWithEmailAndPassword(auth, trimmedEmail, password) : await signInWithEmailAndPassword(auth, trimmedEmail, password); try { await recordAuditEvent(credentials.user, "login", "password"); } catch { toast.warning("Login berhasil, riwayat belum tersimpan", { description: "Sesi aktif, tetapi aktivitas login belum dapat dicatat." }); } }
-    catch (error) { const feedback = getAuthErrorMessage(error, register ? "register" : "login"); toast.error(feedback.title, { description: feedback.description }); }
-    finally { setAuthBusy(false); setBusyMode(null); }
-  };
-  const resetPassword = async () => {
-    if (authBusy) return;
-    const trimmedEmail = validateIdentifier();
-    if (!trimmedEmail || register) return;
-    if (!auth) { toast.error("Firebase belum terkonfigurasi", { description: "Reset password memerlukan koneksi Firebase aktif." }); return; }
-    try { await sendPasswordResetEmail(auth, trimmedEmail); toast.success("Tautan reset password dikirim", { description: `Periksa inbox ${trimmedEmail} dan ikuti instruksinya.` }); }
-    catch (error) { const feedback = getAuthErrorMessage(error, "reset"); toast.error(feedback.title, { description: feedback.description }); }
-  };
-  return <main className="auth-shell"><div className="auth-card"><Logo /><div className="mt-12 max-w-sm"><div className="eyebrow">secure by design</div><h1 className="mt-4 font-display text-4xl font-semibold leading-[1.04] tracking-[-.055em] text-slate-900">Satu tempat untuk semua akses penting.</h1><p className="mt-5 text-[15px] leading-7 text-slate-500">Kunci vault dengan Master Password yang hanya Anda miliki. Data rahasia dienkripsi di browser sebelum menuju Firestore.</p></div><div className="mt-8 space-y-3"><Input required disabled={authBusy} type="text" autoComplete="username" placeholder="Username" aria-label="Username" value={username} onChange={e => setUsername(e.target.value)} /><Input required disabled={authBusy} type="password" autoComplete={register ? "new-password" : "current-password"} placeholder={register ? "Password akun" : "Password"} value={password} onChange={e => setPassword(e.target.value)} /><label className={`remember-login ${register ? "muted" : ""}`}><input type="checkbox" disabled={authBusy} checked={rememberLogin} onChange={event => setRememberLogin(event.target.checked)} aria-describedby="remember-login-help" /><span><strong>Ingat Saya</strong><small id="remember-login-help">{rememberLogin ? "Sesi Firebase disimpan di browser ini." : "Sesi berakhir saat browser ditutup."} Password mentah tidak pernah disimpan.</small></span></label><Button disabled={authBusy} aria-busy={busyMode === "password"} className="auth-submit h-12 w-full bg-[#1FACFF] font-semibold text-white hover:bg-[#0D8DDB]" onClick={submit}>{busyMode === "password" ? <LoaderCircle className="auth-loading-icon mr-2 size-4" /> : register ? <UserPlus className="mr-2 size-4" /> : <Unlock className="mr-2 size-4" />}{busyMode === "password" ? "Memproses..." : register ? "Buat akun" : "Masuk ke vault"}</Button>{!register && <button type="button" disabled={authBusy} className="auth-forgot-link" onClick={resetPassword} aria-label="Kirim tautan reset password">Lupa Password?</button>}<button type="button" disabled={authBusy} className="w-full py-2 text-sm font-semibold text-[#0D80C9]" onClick={() => setRegister(!register)}>{register ? "Sudah punya akun? Masuk" : "Buat akun baru"}</button></div><div className="mt-12 flex items-center gap-2 text-xs text-slate-400"><ShieldCheck className="size-4 text-[#1FACFF]" /> AES-GCM 256-bit Â· zero-knowledge master key</div></div><div className="auth-aside"><div className="security-rail" /><img src="/assets/vault-pattern.svg" className="absolute inset-0 size-full object-cover opacity-70" alt="" /><div className="relative max-w-md"><div className="status-capsule"><span className="status-dot" /> Client-side encryption active <span className="ml-auto font-mono text-[10px] text-[#0D80C9]">AES-GCM</span></div><div className="mb-6 mt-9 flex size-14 items-center justify-center rounded-2xl bg-white shadow-[0_14px_40px_rgba(31,172,255,.18)]"><Lock className="size-6 text-[#1FACFF]" /></div><p className="font-display text-3xl font-semibold leading-tight tracking-[-.05em] text-slate-800">â€œKeamanan yang baik terasa seperti ruang bernapas.â€</p><div className="mt-7 flex gap-3 text-sm text-slate-500"><div className="mt-2 h-px w-8 shrink-0 bg-[#1FACFF]" /><span>Vaultmark menjaga akses Anda tetap sederhana, cepat, dan di bawah kendali sendiri.</span></div><div className="mt-10 flex items-center gap-2 text-xs font-semibold text-slate-500"><ShieldCheck className="size-4 text-[#1FACFF]" />Master key never leaves this browser</div></div></div></main>;
-}
+
+
+
 
 export default function Home() { const { theme, toggleTheme } = useTheme(); const [user, setUser] = useState<User | null>(null); const [master, setMaster] = useState(""); const [unlocked, setUnlocked] = useState(false); const [locked, setLocked] = useState(false); const [unlockBusy, setUnlockBusy] = useState(false); const [unlockError, setUnlockError] = useState(""); const [accounts, setAccounts] = useState<VaultAccount[]>([]); const [query, setQuery] = useState(""); const [activeTag, setActiveTag] = useState(() => { if (typeof window === "undefined") return "All accounts"; const saved = window.localStorage.getItem("vaultmark-active-category"); return saved?.trim() || "All accounts"; }); const [view, setView] = useState<"vault" | "settings">("vault"); const [modal, setModal] = useState(false); const [editing, setEditing] = useState<VaultAccount | null>(null); const [mobileNav, setMobileNav] = useState(false); const [sidebarOpen, setSidebarOpen] = useState(false); const [displayMode, setDisplayMode] = useState<"cards" | "list">("cards"); const [sortBy, setSortBy] = useState<"service" | "createdAt" | "updatedAt">("updatedAt"); const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc"); const [sortOpen, setSortOpen] = useState(false); const [categoryOpen, setCategoryOpen] = useState(false); const [isSorting, setIsSorting] = useState(false); const [authLoading, setAuthLoading] = useState(Boolean(auth)); const [vaultLoading, setVaultLoading] = useState(false); const [lockMinutes, setLockMinutes] = useState(15); const [toastDuration, setToastDuration] = useState(getToastDuration); const [tagColors, setTagColors] = useState<Record<string, string>>(getTagColors); const authReadyRef = useRef(false); const vaultHasLoadedRef = useRef(false); const timer = useRef<number | undefined>(undefined); const debouncedQuery = useDebouncedValue(query, 280); const isSearchDebouncing = query !== debouncedQuery; const tags = useMemo(() => ["All accounts", ...Array.from(new Set(accounts.flatMap(account => account.tags)))], [accounts]); const [activityLabel, setActivityLabel] = useState(""); const withActivity = async <T,>(label: string, operation: () => Promise<T>) => { setActivityLabel(label); try { return await operation(); } finally { window.setTimeout(() => setActivityLabel(""), 180); } };
   const [mustChangePassword, setMustChangePassword] = useState(false); const [profileLoading, setProfileLoading] = useState(Boolean(auth)); const [profileError, setProfileError] = useState(""); const [profileRetry, setProfileRetry] = useState(0); const { displayName, photoURL, saveProfile } = useProfile(user);

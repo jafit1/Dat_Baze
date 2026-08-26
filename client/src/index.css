@@ -687,3 +687,7 @@ html, body, #root { min-width: 0; overflow-x: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) { .activity-spinner { animation: none; } }
+
+
+/* Vaultmark v2: fokus keyboard selalu terlihat pada semua kontrol kustom. */
+button:focus-visible, [role="button"]:focus-visible, .nav-item:focus-visible, .icon-button:focus-visible { outline: 2px solid #1FACFF; outline-offset: 2px; border-radius: inherit; }
